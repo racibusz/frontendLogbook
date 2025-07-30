@@ -1,0 +1,20 @@
+<div class="row m-0 p-0">
+    <div class="col d-flex justify-content-between">
+        <i class="bi bi-map"></i>
+        {{flight.departureAerodrome}} - {{flight.arrivalAerodrome}}
+    </div>
+    <div class="col d-flex justify-content-between">
+        <i class="bi bi-calendar me-2"></i>
+        {{flight.flightDate}}
+    </div>
+</div>
+<div class="row m-0 p-0">
+    <div class="col d-flex justify-content-between">
+        <i class="bi bi-airplane-engines me-2"></i>
+        {{flight.aircraftRegistration}} ({{flight.aircraftType}})
+    </div>
+    <div class="col d-flex justify-content-between">
+        <i class="bi bi-clock me-2"></i> 
+        {{flight.departureTime.slice(0,5)}} - {{flight.arrivalTime.slice(0,5)}}
+    </div>
+</div>
