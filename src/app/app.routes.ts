@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
 import { HomePageComponent } from './home_page/home-page.component';
 import {authGuard} from './auth/auth.guard';
+import {guestGuard} from './auth/guest.guard';
+
 
 export const routes: Routes = [
     {
@@ -18,6 +20,7 @@ export const routes: Routes = [
         children: [
             {path: '', loadComponent: () => import('./flights_page/dashboard-page/dashboard-page.component').then(m => m.DashboardPageComponent)},
             {path: 'list', loadComponent: () => import('./flights_page/flights-list/flights-list.component').then(m => m.FlightsListComponent)},
+            {path: 'add', loadComponent: () => import('./flights_page/add-flight-page/add-flight-page.component').then(m=>m.AddFlightPageComponent)},
         ]
     },
     {

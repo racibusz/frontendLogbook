@@ -1,0 +1,8 @@
+@keyframes expand {
+  from {max-height: 0}
+  to {max-height: 100%}
+}
+.animated-alert{
+  overflow: hidden;
+  animation: expand .8s linear;
+}

@@ -1,39 +1,47 @@
 <div class="container-fluid row p-0 m-0">
   <div class="col-md-3 m-0 p-0 border-end vh-100">
-    <ul class="nav m-0 p-0">
-      <!-- <li *ngFor="let flight of flights" (click)="flightSelected(flight.id)" class="nav-item w-100 p-1 border-bottom">
-      <div class="row m-0 p-0">
-        <div class="col d-flex justify-content-between">
-          <i class="bi bi-map"></i>
-          {{flight.departureAerodrome}} - {{flight.arrivalAerodrome}}
+      <ul class="nav m-0 p-0">
+        <!-- <li *ngFor="let flight of flights" (click)="flightSelected(flight.id)" class="nav-item w-100 p-1 border-bottom">
+        <div class="row m-0 p-0">
+          <div class="col d-flex justify-content-between">
+            <i class="bi bi-map"></i>
+            {{flight.departureAerodrome}} - {{flight.arrivalAerodrome}}
+          </div>
+          <div class="col d-flex justify-content-between">
+            <i class="bi bi-calendar me-2"></i>
+            {{flight.flightDate}}
+          </div>
         </div>
-        <div class="col d-flex justify-content-between">
-          <i class="bi bi-calendar me-2"></i>
-          {{flight.flightDate}}
+        <div class="row m-0 p-0">
+          <div class="col d-flex justify-content-between">
+            <i class="bi bi-airplane-engines me-2"></i>
+            {{flight.aircraftRegistration}} ({{flight.aircraftType}})
+          </div>
+          <div class="col d-flex justify-content-between">
+            <i class="bi bi-clock me-2"></i>
+            {{flight.departureTime.slice(0,5)}} - {{flight.arrivalTime.slice(0,5)}}
+          </div>
         </div>
-      </div>
-      <div class="row m-0 p-0">
-        <div class="col d-flex justify-content-between">
-          <i class="bi bi-airplane-engines me-2"></i>
-          {{flight.aircraftRegistration}} ({{flight.aircraftType}})
-        </div>
-        <div class="col d-flex justify-content-between">
-          <i class="bi bi-clock me-2"></i>
-          {{flight.departureTime.slice(0,5)}} - {{flight.arrivalTime.slice(0,5)}}
-        </div>
-      </div>
-    </li> -->
-    <!-- <flight-list-item *ngFor="let flight of flights" (flight)="flight"></flight-list-item> -->
-    @for (flight of flights; track flight) {
-      <li
-        flight-list-item
-        [flight]="flight"
-        class="nav-item w-100 p-1 border-bottom">
-      </li>
+      </li> -->
+      <!-- <flight-list-item *ngFor="let flight of flights" (flight)="flight"></flight-list-item> -->
+      @for (flight of flights; track flight) {
+        <li
+          flight-list-item
+          [flight]="flight"
+          (click)="flightSelected(flight.id)"
+          [class]="'nav-item w-100 p-1 border-bottom user-select-none'"
+          [class.bg-dark]="selectedFlight()?.id === flight.id"
+          [class.text-light]="selectedFlight()?.id==flight.id"
+          >
+        </li>
+      }
+    </ul>
+  </div>
+  <div class="col-md">
+    @if(selectedFlight()){
+      <flight-details [flight]="selectedFlight" [unsavedChanges]="unsavedChanges"></flight-details>
     }
-  </ul>
-</div>
-<div class="col-md">
+  </div>
 
-</div>
+
 </div>
