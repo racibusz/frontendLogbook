@@ -19,7 +19,7 @@
                             <input list="aircraftTypes" class="form-control" type="text" (input)="onAircraftInput($event.target.value); checkTypes($event.target.value.toUpperCase());">
                             <datalist id="aircraftTypes">
                                 @for (type of airplaneTypes(); track type.id) {
-                                  <option value="{{type.type}} - {{ type.model }}">{{type.type}} - {{type.model}}</option>
+                                    <option value="{{type.type}} - {{ type.model }}">{{type.type}} - {{type.model}}</option>
                                 } 
                             </datalist>
                         </div>    
@@ -32,7 +32,7 @@
         </div>
 
 
-        <div class="col-md">
+        <div class="col-md  ">
             <header class="p-2 rounded bg-secondary text-light d-flex justify-content-between">
                 Time
                 <i class="bi-clock"></i>
@@ -65,51 +65,52 @@
                     <th>Single Pilot SE</th>
                     <th>Single Pilot ME</th>
                     <th>Multi Pilot</th>
+                    <th>Instructor</th>
                     <th>Night</th>
                     <th>IFR</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    
+                    <td>
+                        <div class="form-check d-flex justify-content-center">
+                            <input class="form-check-input" type="checkbox" name="pilotFunction" value="picTime" checked (change)="setPilotFunction($event.target.value, $event.target.checked)">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-check d-flex justify-content-center">
+                            <input class="form-check-input" type="checkbox" name="pilotFunction" value="SinglePilotSeTime" checked (change)="setPilotFunction($event.target.value, $event.target.checked)">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-check d-flex justify-content-center">
+                            <input class="form-check-input" type="checkbox" name="pilotFunction" value="SinglePilotMeTime" (change)="setPilotFunction($event.target.value, $event.target.checked)">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-check d-flex justify-content-center">
+                            <input class="form-check-input" type="checkbox" name="pilotFunction" value="multiPilotTime" (change)="setPilotFunction($event.target.value, $event.target.checked)">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-check d-flex justify-content-center">
+                            <input class="form-check-input" type="checkbox" name="pilotFunction" value="instructorTime" (change)="setPilotFunction($event.target.value, $event.target.checked)">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-check d-flex justify-content-center">
+                            <input class="form-check-input" type="checkbox" name="pilotFunction" value="flightConditionNightTime" (change)="setPilotFunction($event.target.value, $event.target.checked)">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-check d-flex justify-content-center">
+                            <input class="form-check-input" type="checkbox" name="pilotFunction" value="flightConditionIfrTime" (change)="setPilotFunction($event.target.value, $event.target.checked)">
+                        </div>
+                    </td>
                 </tr>
                 </tbody>
             </table>
         </div>
-        <div class="col-12 mb-2">
-            <header class="p-2 rounded bg-secondary text-light d-flex justify-content-between" data-bs-toggle="collapse" data-bs-target="#timeDetailsCollapse">
-                Detailed time
-                <i class="bi bi-arrows-expand"></i>
-            </header>
-            <div class="collapse" id="timeDetailsCollapse">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>Total time</th>
-                        <th>PIC time</th>
-                        <th>Single Pilot SE time</th>
-                        <th>Single Pilot ME time</th>
-                        <th>Multi Pilot time</th>
-                        <th>NIGHT</th>
-                        <th>IFR</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td><input class="form-control" type="time" value={{flight()?.totalTime}} (input)="setValue('totalTime', $event.target.value.toUpperCase())"/></td>
-                        <td><input class="form-control" type="time" value={{flight()?.picTime}} (input)="setValue('picTime', $event.target.value.toUpperCase())"/></td>
-                        <td><input class="form-control" type="time" value={{flight()?.SinglePilotSeTime}} (input)="setValue('SinglePilotSeTime', $event.target.value.toUpperCase())"/></td>
-                        <td><input class="form-control" type="time" value={{flight()?.SinglePilotMeTime}} (input)="setValue('SinglePilotMeTime', $event.target.value.toUpperCase())"/></td>
-                        <td><input class="form-control" type="time" value={{flight()?.multiPilotTime}} (input)="setValue('multiPilotTime', $event.target.value.toUpperCase())"/></td>
-                        <td><input class="form-control" type="time" value={{flight()?.flightConditionNightTime}} (input)="setValue('flightConditionNightTime', $event.target.value.toUpperCase())"/></td>
-                        <td><input class="form-control" type="time" value={{flight()?.flightConditionIfrTime}} (input)="setValue('flightConditionIfrTime', $event.target.value.toUpperCase())"/></td>
-                    </tr>
-                    </tbody>
-                </table>  
-            </div>
-        </div>
-    </div>
-
     <div class="row">
         <!-- <h1>Duration {{flightDuration}}</h1> -->
         <div class="col-md">
@@ -154,10 +155,68 @@
             </table>
         </div>
     </div>
+    <div class="col-12 my-2">
+        <header class="p-2 rounded bg-secondary text-light d-flex justify-content-between">
+            Additional info
+            <i class="bi bi-card-heading"></i>
+        </header>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Remarks</th>
+                <th>PIC name</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><input class="form-control" type="text" value={{flight()?.remarks}} (input)="setValue('remarks', $event.target.value.toUpperCase())"/></td>
+                <td><input class="form-control" type="text" value={{flight()?.picName}} (input)="setValue('picName', $event.target.value.toUpperCase())"/></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+        <div class="col-12 mb-2">
+            <header class="p-2 rounded bg-secondary text-light d-flex justify-content-between" data-bs-toggle="collapse" data-bs-target="#timeDetailsCollapse">
+                Detailed time
+                <i class="bi bi-arrows-expand"></i>
+            </header>
+            <div class="collapse" id="timeDetailsCollapse">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Total time</th>
+                        <th>PIC time</th>
+                        <th>Single Pilot SE time</th>
+                        <th>Single Pilot ME time</th>
+                        <th>Multi Pilot time</th>
+                        <th>Instructor</th>
+                        <th>NIGHT</th>
+                        <th>IFR</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><input class="form-control" type="time" value={{flight()?.totalTime}} (input)="setValue('totalTime', $event.target.value.toUpperCase())"/></td>
+                        <td><input class="form-control" type="time" value={{flight()?.picTime}} (input)="setValue('picTime', $event.target.value.toUpperCase())"/></td>
+                        <td><input class="form-control" type="time" value={{flight()?.SinglePilotSeTime}} (input)="setValue('SinglePilotSeTime', $event.target.value.toUpperCase())"/></td>
+                        <td><input class="form-control" type="time" value={{flight()?.SinglePilotMeTime}} (input)="setValue('SinglePilotMeTime', $event.target.value.toUpperCase())"/></td>
+                        <td><input class="form-control" type="time" value={{flight()?.multiPilotTime}} (input)="setValue('multiPilotTime', $event.target.value.toUpperCase())"/></td>
+                        <td><input class="form-control" type="time" value={{flight()?.instructorTime}} (input)="setValue('instructorTime', $event.target.value.toUpperCase())"/></td>
+                        <td><input class="form-control" type="time" value={{flight()?.flightConditionNightTime}} (input)="setValue('flightConditionNightTime', $event.target.value.toUpperCase())"/></td>
+                        <td><input class="form-control" type="time" value={{flight()?.flightConditionIfrTime}} (input)="setValue('flightConditionIfrTime', $event.target.value.toUpperCase())"/></td>
+                    </tr>
+                    </tbody>
+                </table>  
+            </div>
+        </div>
+    </div>
+
+
     <div style="position: relative;">
         <header class="p-2 rounded bg-secondary text-light d-flex justify-content-between" data-bs-toggle="collapse" data-bs-target="#logBookPreviewCollapse">
             Logbook preview
-            <i class="bi bi-table"></i>
+            <i class="bi bi-arrows-expand"></i>
         </header>
         <div class="collapse table-responsive" id="logBookPreviewCollapse" style="position: absolute; width: 100%;">
             <table class=" table table-bordered">
@@ -202,7 +261,7 @@
                     <td>{{ flight()?.departureTime }}</td>
                     <td>{{ flight()?.arrivalAerodrome }}</td>
                     <td>{{ flight()?.arrivalTime }}</td>
-                    <td>{{ flight()?.aircraftTypeId }}</td>
+                    <td>{{ selectedType()?.type }}</td>
                     <td>{{ flight()?.aircraftRegistration}}</td>
                     <td>{{ flight()?.SinglePilotSeTime }}</td>
                     <td>{{ flight()?.SinglePilotMeTime }}</td>
@@ -222,7 +281,11 @@
                 </tbody>
             </table>
         </div>
-        </div>
+    </div>
+
+    <div class="m-3 p-2 d-flex justify-content-center">
+        <button class="btn btn-outline-success p-3 px-5" (click)="addFlight()">Add flight</button>
+    </div>
 
 
 </div>

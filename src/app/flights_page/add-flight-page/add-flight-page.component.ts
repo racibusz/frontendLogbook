@@ -5,6 +5,8 @@ import { effect } from "@angular/core";
 import { ApiService } from "../../services/api.service";
 import { AircraftTypeInterface } from "../flights-list/aircraftType.interface";
 import { createFlightDTO } from "./createFlightDTO";
+import { Router } from "@angular/router";
+
 
 @Component({
     selector: 'add-fligh-page',
@@ -12,8 +14,9 @@ import { createFlightDTO } from "./createFlightDTO";
     standalone: true
 })
 export class AddFlightPageComponent {
-    constructor(private apiService: ApiService){}
+    constructor(private apiService: ApiService, private router:Router){}
     airplaneTypes = signal<AircraftTypeInterface[]>([]);
+    selectedType = signal<AircraftTypeInterface | undefined>(undefined);
     flight: WritableSignal<createFlightDTO> = signal({
         departureAerodrome: '',
         departureTime: '',
@@ -38,6 +41,14 @@ export class AddFlightPageComponent {
         remarks: '',
     });
 
+    pilotFunctionCheckboxesStatus = signal({
+        'picTime': true,
+        'SinglePilotSeTime': true,
+        'SinglePilotMeTime': false,
+        'multiPilotTime': false,
+        'instructorTime': false,
+    })
+
     calculateTime(){
         if(this.flight().arrivalTime == '' || this.flight().departureTime == '')
             return
@@ -57,6 +68,18 @@ export class AddFlightPageComponent {
         // Sformatuj do HH:MM
         const formatted = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
         this.setValue('totalTime', formatted);
+        Object.entries(this.pilotFunctionCheckboxesStatus()).forEach(([key, value]) => {
+            if(value){
+                if(key == 'picTime')
+                    this.setValue("picName", "SELF");
+                this.setValue(key, this.flight()?.totalTime);
+            }
+            else{
+                if(key=='picTime')
+                    this.setValue("picName", "");
+                this.setValue(key, '');
+            }
+        });
     }
 
     checkTypes(type:string){
@@ -78,5 +101,21 @@ export class AddFlightPageComponent {
     }
     onAircraftInput(value: string){
         this.setValue("aircraftTypeId", this.airplaneTypes().find(type =>`${type.type} - ${type.model}`.toUpperCase() === value.toUpperCase())?.id);
+        this.selectedType.set(this.airplaneTypes().find(type => type.id == this.flight()?.aircraftTypeId));
     }
+
+    setPilotFunction(field: string, checked: boolean){
+        this.pilotFunctionCheckboxesStatus.update(current=>{
+            return({...current, [field]: checked});
+        })
+        this.calculateTime();
+    }
+
+    addFlight(){
+        this.apiService.postData('flights', this.flight()).subscribe({
+            next: (res)=>{this.router.navigate(["/flights"])},
+            error: (err) => {throw err},
+        });
+    }
+
 }
