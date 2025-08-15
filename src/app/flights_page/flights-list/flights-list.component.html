@@ -1,29 +1,6 @@
-<div class="container-fluid row p-0 m-0">
-  <div class="col-md-3 m-0 p-0 border-end vh-100">
+<div class="row p-0 m-0" >
+  <div class="col-sm-3 m-0 p-0 border-end vh-100 d-flex flex-column justify-content-between">
       <ul class="nav m-0 p-0">
-        <!-- <li *ngFor="let flight of flights" (click)="flightSelected(flight.id)" class="nav-item w-100 p-1 border-bottom">
-        <div class="row m-0 p-0">
-          <div class="col d-flex justify-content-between">
-            <i class="bi bi-map"></i>
-            {{flight.departureAerodrome}} - {{flight.arrivalAerodrome}}
-          </div>
-          <div class="col d-flex justify-content-between">
-            <i class="bi bi-calendar me-2"></i>
-            {{flight.flightDate}}
-          </div>
-        </div>
-        <div class="row m-0 p-0">
-          <div class="col d-flex justify-content-between">
-            <i class="bi bi-airplane-engines me-2"></i>
-            {{flight.aircraftRegistration}} ({{flight.aircraftType}})
-          </div>
-          <div class="col d-flex justify-content-between">
-            <i class="bi bi-clock me-2"></i>
-            {{flight.departureTime.slice(0,5)}} - {{flight.arrivalTime.slice(0,5)}}
-          </div>
-        </div>
-      </li> -->
-      <!-- <flight-list-item *ngFor="let flight of flights" (flight)="flight"></flight-list-item> -->
       @for (flight of flights; track flight) {
         <li
           flight-list-item
@@ -36,8 +13,15 @@
         </li>
       }
     </ul>
+    <div class="p-0 m-0 d-flex">
+      <button class="btn btn-primary rounded-0 p-4" [disabled]="currentPage() == 1" (click)="previousPage()"><i class="bi bi-arrow-left"></i></button>
+      <button class="btn btn-primary rounded-0 p-4" [disabled]="currentPage() == totalPages()" (click)="nextPage()"><i class="bi bi-arrow-right"></i></button>
+      <div class="w-100 d-flex flex-column justify-content-center text-center">
+        Page: {{ currentPage() }} / {{ totalPages()}}
+      </div>
+    </div>
   </div>
-  <div class="col-md">
+  <div class="col-sm">
     @if(selectedFlight()){
       <flight-details [flight]="selectedFlight" [unsavedChanges]="unsavedChanges"></flight-details>
     }

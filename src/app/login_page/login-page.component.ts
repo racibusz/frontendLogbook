@@ -21,7 +21,7 @@ export class LoginPageComponent {
     e.preventDefault();
     this.apiService.postData("auth/login", {email:this.email, password:this.password}).subscribe({
       next: (res)=>{this.tokenSerice.setToken(res.accessToken);this.router.navigate(["/flights"]);},
-      error: (err)=>{throw err}
+      error: (err)=>{alert(err.message); throw err;}
     })
   }
 }

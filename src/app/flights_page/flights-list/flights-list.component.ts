@@ -24,9 +24,14 @@ export class FlightsListComponent {
     selectedFlight = signal<Flight | undefined>(undefined);
     flights:Flight[] = [];
     unsavedChanges = signal(false);
+    currentPage = signal<number>(0);
+    totalPages = signal<number>(0);
     ngOnInit(){
-        this.apiService.getData("flights").subscribe({
-            next: (res)=>{ this.flights = res.flights},
+        this.getData();
+    }
+    getData(){
+        this.apiService.getData("flights" + (this.currentPage()!=0?"?page="+this.currentPage():"")).subscribe({
+            next: (res)=>{ this.flights = res.flights; this.currentPage.set(res.presentPage); this.totalPages.set(res.totalPages); console.log(res)},
             error: (err) => {throw err}
         });
     }
@@ -35,5 +40,16 @@ export class FlightsListComponent {
         this.unsavedChanges.set(false);
         this.selectedFlight.set(selectedFlight);
     }
-
+    previousPage(){
+        this.currentPage.update((previous)=>{
+            return previous - 1;
+        })
+        this.getData();
+    }
+    nextPage(){
+        this.currentPage.update((previous)=>{
+            return previous + 1;
+        })
+        this.getData();
+    }
 }

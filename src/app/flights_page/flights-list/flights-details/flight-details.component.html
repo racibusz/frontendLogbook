@@ -1,4 +1,6 @@
-@if(unsavedChanges()){
+
+<div class="container p-1" id="flightDetails">
+    @if(unsavedChanges()){
 <div class="mt-2 alert alert-danger d-flex align-items-center justify-content-between animated-alert py-0 pe-0 m-0">
     <span>You have unsaved changes. Remember to save them before you select another airplane</span>
     <button class="btn btn-lg btn-outline-success ">Save them</button>
@@ -7,7 +9,7 @@
     Warning! The time doesn't self-calculate when changing the data from this window
 </div>
 }
-<div class="container p-1">
+    <button class="btn btn-danger rounded-0 w-100 p-3 mb-2" id="deselectButton" (click)="deselect()">Close</button>
     <div class="row">
         <div class="col-md">
             <header class="p-2 rounded bg-secondary text-light d-flex justify-content-between">
@@ -112,7 +114,7 @@
                 <!-- <i class="bi bi-globe-europe-africa"></i> -->
                  <!-- Have to find an appropiate icon -->
             </header>
-            <table class="table table-striped">
+            <table class="table table-striped"></table>
                 <thead>
                 <tr>
                     <th>Day</th>
