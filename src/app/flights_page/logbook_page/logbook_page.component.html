@@ -1,0 +1,81 @@
+<div class="border table-responsive ">
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr class="text-center">
+            <th class="d-flex">
+                <button [disabled]="page() == 1" class="btn btn-primary rounded-0" (click)="previousPage()"><i class="bi bi-arrow-left"></i></button>
+                <button [disabled]="page() == totalPages()" class="btn btn-primary rounded-0" (click)="nextPage()"><i class="bi bi-arrow-right"></i></button>
+            </th>
+
+                <th>Page</th>
+                <th>
+                    {{page()}}
+                </th>
+                <th>Total</th>
+                <th>
+                    {{totalPages()}}
+                </th>
+            </tr>
+            <tr>
+                <th scope="col" rowspan="2">Date</th>
+                <th scope="col" colspan="2">Departure</th>
+                <th scope="col" colspan="2">Arrival</th>
+                <th scope="col" colspan="2">Aircraft</th>
+                <th scope="col" colspan="2">Single-Pilot Time</th>
+                <th scope="col" rowspan="2">Multi-Pilot Time</th>
+                <th scope="col" rowspan="2">Total time of Flight</th>
+                <th scope="col" rowspan="2">PIC name</th>
+                <th scope="col" colspan="2">Landings</th>
+                <th scope="col" colspan="2">Operational Condition Time</th>
+                <th scope="col" colspan="4">Pilot Function Time</th>
+                <th scope="col" rowspan="2">Remarks</th>
+            </tr>
+            <tr>
+                <th scope="col">Place</th>
+                <th scope="col">Time</th>
+                <th scope="col">Place</th>
+                <th scope="col">Time</th>
+                <th scope="col">Make, Model</th>
+                <th scope="col">Registration</th>
+                <th scope="col">SE</th>
+                <th scope="col">ME</th>
+                <th scope="col">Day</th>
+                <th scope="col">Night</th>
+                <th scope="col">Night</th>
+                <th scope="col">IFR</th>
+                <th scope="col">PIC</th>
+                <th scope="col">Co-Pilot</th>
+                <th scope="col">Dual</th>
+                <th scope="col">Instructor</th>
+            </tr>
+        </thead>
+        <tbody>
+        @for(flight of flights(); track flight){
+            <tr>
+                <td>{{ flight?.flightDate }}</td>
+                <td>{{ flight?.departureAerodrome }}</td>
+                <td>{{ flight?.departureTime }}</td>
+                <td>{{ flight?.arrivalAerodrome }}</td>
+                <td>{{ flight?.arrivalTime }}</td>
+                <td>{{ flight?.aircraft?.aircraftType?.type }}</td>
+                <td>{{ flight?.aircraft?.registration }}</td>
+                <td>{{ flight?.SinglePilotSeTime }}</td>
+                <td>{{ flight?.SinglePilotMeTime }}</td>
+                <td>{{ flight?.multiPilotTime }}</td>
+                <td>{{ flight?.totalTime }}</td>
+                <td>{{ flight?.picName }}</td>
+                <td>{{ flight?.landingsDay }}</td>
+                <td>{{ flight?.landingsNight }}</td>
+                <td>{{ flight?.flightConditionNightTime }}</td>
+                <td>{{ flight?.flightConditionIfrTime }}</td>
+                <td>{{ flight?.picTime }}</td>
+                <td>{{ flight?.copilotTime }}</td>
+                <td>{{ flight?.dualTime }}</td>
+                <td>{{ flight?.instructorTime }}</td>
+                <td>{{ flight?.remarks }}</td>
+            </tr>
+        }
+        </tbody>
+        <tfoot logbook-summary [page]="page()"></tfoot>
+    </table>
+</div>

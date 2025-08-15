@@ -6,6 +6,7 @@ import { ApiService } from "../../services/api.service";
 import { AircraftTypeInterface } from "../flights-list/aircraftType.interface";
 import { createFlightDTO } from "./createFlightDTO";
 import { Router } from "@angular/router";
+import { AircraftDTO } from "./aircraftDTO";
 
 
 @Component({
@@ -17,6 +18,9 @@ export class AddFlightPageComponent {
     constructor(private apiService: ApiService, private router:Router){}
     airplaneTypes = signal<AircraftTypeInterface[]>([]);
     selectedType = signal<AircraftTypeInterface | undefined>(undefined);
+
+    aircrafts = signal<AircraftDTO[]>([]);
+
     flight: WritableSignal<createFlightDTO> = signal({
         departureAerodrome: '',
         departureTime: '',
@@ -89,6 +93,13 @@ export class AddFlightPageComponent {
         })
     }
 
+    getAirplanes(){
+        this.apiService.getData('airplanes/'+this.flight()?.aircraftRegistration).subscribe({
+            next: (res)=>{this.aircrafts.set(res)},
+            error: (err) => {throw err}
+        })
+    }
+
     setValue(field: string, val: any) {
         // Break of single responsibility rule, will have to figure out how to do it correctly
         this.flight.update(current=>{
@@ -112,6 +123,7 @@ export class AddFlightPageComponent {
     }
 
     addFlight(){
+        // TODO: data validation
         this.apiService.postData('flights', this.flight()).subscribe({
             next: (res)=>{this.router.navigate(["/flights"])},
             error: (err) => {throw err},

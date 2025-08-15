@@ -21,6 +21,7 @@ export const routes: Routes = [
             {path: '', loadComponent: () => import('./flights_page/dashboard-page/dashboard-page.component').then(m => m.DashboardPageComponent)},
             {path: 'list', loadComponent: () => import('./flights_page/flights-list/flights-list.component').then(m => m.FlightsListComponent)},
             {path: 'add', loadComponent: () => import('./flights_page/add-flight-page/add-flight-page.component').then(m=>m.AddFlightPageComponent)},
+            {path: 'logbook', loadComponent: () => import('./flights_page/logbook_page/logbook_page.component').then(m=>m.LogbookPageComponent)},
         ]
     },
     {

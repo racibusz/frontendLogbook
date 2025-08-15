@@ -1,3 +1,6 @@
+
+<!-- TODO: inform that you have to select aircraft type -->
+
 <div class="container p-3">
     <div class="row">
         <div class="col-md">
@@ -8,12 +11,15 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>Type</th>
+                    @if(aircrafts().length<1 && flight().aircraftRegistration!=''){
+                        <th>Type</th>
+                    }
                     <th>Registration</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
+                    @if(aircrafts().length<1 && flight().aircraftRegistration!=''){
                     <td>
                         <div>
                             <input list="aircraftTypes" class="form-control" type="text" (input)="onAircraftInput($event.target.value); checkTypes($event.target.value.toUpperCase());">
@@ -23,9 +29,16 @@
                                 } 
                             </datalist>
                         </div>    
-                        <!-- <input class="form-control" type="text" [value]="flight()?.aircraft?.aircraftType?.type" (input)="setValue('aircraftType', $event.target.value.toUpperCase()); checkTypes($event.target.value.toUpperCase());"/> -->
                     </td>
-                    <td><input class="form-control" type="text" [value]="flight()?.aircraftRegistration" (input)="setValue('aircraftRegistration', $event.target.value.toUpperCase())"/></td>
+                    }
+                    <td>
+                        <input class="form-control" list="aircrafts" type="text" [value]="flight()?.aircraftRegistration" (input)="setValue('aircraftRegistration', $event.target.value.toUpperCase()); getAirplanes()"/>
+                        <datalist id="aircrafts">
+                                @for (aircraft of aircrafts(); track aircraft.id) {
+                                    <option value="{{aircraft.registration}}">{{aircraft.registration}} - {{aircraft.aircraftType.model}} ({{aircraft.aircraftType.type}})</option>
+                                } 
+                        </datalist>
+                    </td>
                 </tr>
                 </tbody>
             </table>
