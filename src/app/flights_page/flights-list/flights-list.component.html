@@ -1,4 +1,4 @@
-<div class="row p-0 m-0" >
+<div class="row p-0 m-0">
   <div class="col-sm-3 m-0 p-0 border-end vh-100 d-flex flex-column justify-content-between">
       <ul class="nav m-0 p-0">
       @for (flight of flights; track flight) {
@@ -6,7 +6,7 @@
           flight-list-item
           [flight]="flight"
           (click)="flightSelected(flight.id)"
-          [class]="'nav-item w-100 p-1 border-bottom user-select-none'"
+          [class]="'nav-item w-100 p-0 border-bottom user-select-none'"
           [class.bg-dark]="selectedFlight()?.id === flight.id"
           [class.text-light]="selectedFlight()?.id==flight.id"
           >
@@ -23,9 +23,7 @@
   </div>
   <div class="col-sm">
     @if(selectedFlight()){
-      <flight-details [flight]="selectedFlight" [unsavedChanges]="unsavedChanges"></flight-details>
+      <flight-details [flight]="selectedFlight" [unsavedChanges]="unsavedChanges" (flightModified)='getData()'></flight-details>
     }
   </div>
-
-
 </div>

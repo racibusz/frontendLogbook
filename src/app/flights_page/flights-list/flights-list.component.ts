@@ -31,7 +31,7 @@ export class FlightsListComponent {
     }
     getData(){
         this.apiService.getData("flights" + (this.currentPage()!=0?"?page="+this.currentPage():"")).subscribe({
-            next: (res)=>{ this.flights = res.flights; this.currentPage.set(res.presentPage); this.totalPages.set(res.totalPages); console.log(res)},
+            next: (res)=>{ this.flights = res.flights; this.currentPage.set(res.presentPage); this.totalPages.set(res.totalPages)},
             error: (err) => {throw err}
         });
     }

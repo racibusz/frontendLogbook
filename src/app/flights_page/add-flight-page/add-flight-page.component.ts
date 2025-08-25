@@ -18,11 +18,12 @@ export class AddFlightPageComponent {
     constructor(private apiService: ApiService, private router:Router){}
     airplaneTypes = signal<AircraftTypeInterface[]>([]);
     selectedType = signal<AircraftTypeInterface | undefined>(undefined);
-
+    error = signal<String | null>(null);
+    validated = signal<boolean>(false);
     aircrafts = signal<AircraftDTO[]>([]);
 
-    flight: WritableSignal<createFlightDTO> = signal({
-        departureAerodrome: '',
+    emptyFlight: createFlightDTO = {
+            departureAerodrome: '',
         departureTime: '',
         arrivalAerodrome: '',
         arrivalTime: '',
@@ -43,7 +44,8 @@ export class AddFlightPageComponent {
         dualTime: '',
         instructorTime: '',
         remarks: '',
-    });
+    };
+    flight: WritableSignal<createFlightDTO> = signal(this.emptyFlight);
 
     pilotFunctionCheckboxesStatus = signal({
         'picTime': true,
@@ -93,13 +95,6 @@ export class AddFlightPageComponent {
         })
     }
 
-    getAirplanes(){
-        this.apiService.getData('airplanes/'+this.flight()?.aircraftRegistration).subscribe({
-            next: (res)=>{this.aircrafts.set(res)},
-            error: (err) => {throw err}
-        })
-    }
-
     setValue(field: string, val: any) {
         // Break of single responsibility rule, will have to figure out how to do it correctly
         this.flight.update(current=>{
@@ -109,7 +104,17 @@ export class AddFlightPageComponent {
         if(field == "departureTime" || field == "arrivalTime"){
             this.calculateTime();
         }
+        console.log(this.flight());
     }
+    getAirplanes(){
+        this.apiService.getData('airplanes/'+this.flight()?.aircraftRegistration).subscribe({
+            next: (res)=>{this.aircrafts.set(res); if(this.aircrafts().length==1){this.setValue('aircraftTypeId', this.aircrafts()[0].aircraftType.id)}else{this.setValue('aircraftTypeId', undefined)}},
+            error: (err) => {throw err}
+        })
+        console.log(this.aircrafts().find((aircraft)=>{aircraft.registration == this.flight().aircraftRegistration}));
+        console.log(this.aircrafts());
+    }
+
     onAircraftInput(value: string){
         this.setValue("aircraftTypeId", this.airplaneTypes().find(type =>`${type.type} - ${type.model}`.toUpperCase() === value.toUpperCase())?.id);
         this.selectedType.set(this.airplaneTypes().find(type => type.id == this.flight()?.aircraftTypeId));
@@ -122,6 +127,45 @@ export class AddFlightPageComponent {
         this.calculateTime();
     }
 
+    validate(){
+        this.error.set('');
+        if(!this.flight().aircraftTypeId){
+            this.error.update((prev)=>{return prev+"\n"+"Please select the aircraft type"})
+        }
+        if(!this.flight().aircraftRegistration){
+            this.error.update((prev)=>{return prev+"<br />"+"Please provide the aircraft registration"})
+        }
+        if(!this.flight().departureAerodrome){
+            this.error.update((prev)=>{return prev+"<br />"+"Please provide the departure aerodrome"})
+        }
+        if(!this.flight().arrivalAerodrome){
+            this.error.update((prev)=>{return prev+"<br />"+"Please provide the arrival aerodrome"})
+        }
+        if(!this.flight().flightDate){
+            this.error.update((prev)=>{return prev+"<br />"+"Please provide the flight date"})
+        }
+        if(!this.flight().departureTime){
+            this.error.update((prev)=>{return prev+"<br />"+"Please provide the departure time"})
+        }
+        if(!this.flight().arrivalTime){
+            this.error.update((prev)=>{return prev+"<br />"+"Please provide the arrival time"})
+        }
+        if(!this.flight().totalTime){
+            this.error.update((prev)=>{return prev+"<br />"+"Please provide the total flight time"})
+        }
+        if(!this.flight().picName){
+            this.error.update((prev)=>{return prev+"<br />"+"Please provide the PIC name"})
+        }
+        if(this.error() != ''){
+            this.error.update((prev)=>{return prev+"<br />"+"Please fix the errors above."})
+        }
+        if(this.error()==''){
+            this.validated.set(true);
+            this.error.set(null);            
+        }
+        // TODO: Implement a better validation mechanism
+    }
+
     addFlight(){
         // TODO: data validation
         this.apiService.postData('flights', this.flight()).subscribe({
@@ -129,5 +173,7 @@ export class AddFlightPageComponent {
             error: (err) => {throw err},
         });
     }
-
+    clearFlight(){
+        this.flight.set(this.emptyFlight);
+    }
 }
