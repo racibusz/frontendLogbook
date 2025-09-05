@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { SideNavComponent } from "../../components/side-nav/sidenav.component";
 import { RouterOutlet } from "@angular/router";
+import {ApiService} from '../services/api.service';
 
 @Component({
     selector: 'flights-page',
@@ -8,5 +9,5 @@ import { RouterOutlet } from "@angular/router";
     imports: [RouterOutlet, SideNavComponent]
 })
 export class FlightsPageComponent {
-    // Component logic goes here
+
 }

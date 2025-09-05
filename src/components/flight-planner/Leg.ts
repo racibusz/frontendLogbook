@@ -12,6 +12,7 @@ export class Leg {
     steerCourse?: number;
     fiveMinuteDistance?: number;
     time?: string;
+    timeMinutes?: number;
     fuel?: number;
     calculateValues(windDirection: number, windSpeed: number, tas: number, fuelConsumption: number) {
         this.calculateMagneticHeading();
@@ -25,11 +26,11 @@ export class Leg {
         // Fuel
     }
     calculateTime(){
-        const timeMinutes = (Number(this.distance) / Number(this.groundSpeed)) * 60; // time in minutes
-        const hours = Math.floor(timeMinutes / 60);
-        const minutes = Math.round(timeMinutes % 60);
+        this.timeMinutes = (Number(this.distance) / Number(this.groundSpeed)) * 60; // time in minutes
+        const hours = Math.floor(this.timeMinutes / 60);
+        const minutes = Math.round(this.timeMinutes % 60);
         this.time = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
-        this.calculateFuel(timeMinutes);
+        this.calculateFuel(this.timeMinutes);
     }
     calculateFuel(timeInMinutes:number){
         this.fuel = Math.ceil(this.fuelConsumption! * (timeInMinutes / 60));

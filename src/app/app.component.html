@@ -1,1 +1,27 @@
-<router-outlet></router-outlet>
+<!-- <div class="container-fluid p-0 m-0" style="height: 100vh; overflow: hidden;">
+    <div class="row m-0 g-0">
+        @if(showSideNav()){
+        <div class="col-md-2">
+            <side-nav></side-nav>
+        </div>
+        }
+        <div class="col" style="height: 100vh; overflow-y: scroll;">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div> -->
+<div class="container-fluid p-0 m-0 row">
+    @if(showSideNav()){
+        <div class="col-md-2 p-0 m-0">
+            <side-nav></side-nav>
+        </div>
+        <div class="col-md-10 p-0 m-0">
+            <router-outlet></router-outlet>
+        </div>
+    }
+    @if(!showSideNav()){
+        <div class="col-12 p-0 m-0">
+            <router-outlet></router-outlet>
+        </div>
+    }
+</div>

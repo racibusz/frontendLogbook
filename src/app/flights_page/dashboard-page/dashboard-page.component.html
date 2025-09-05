@@ -1,1 +1,94 @@
-<h1>Dashboard Page</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-md p-4 mx-3 my-1 border rounded shadow-sm bg-light text-center">
+            <h1><i class="bi bi-speedometer2 me-2"></i>Dashboard</h1>
+            <p>On this page, you may see overall informations about your flights.</p>
+        </div>
+        <div class="col-md p-4 border rounded shadow-sm bg-light mx-3 my-1 text-center cursor-pointer user-select-none">
+            <h1>Previous Flight</h1>
+                @if(previousFlight() == null){
+                <div class="text-muted">
+                    No previous flight
+                </div>
+                }
+                @if(previousFlight() != null){
+                <div class="row">
+                    <div class="col-12 display-6 d-flex justify-content-center">
+                        <div>
+                            {{previousFlight()?.departureAerodrome}}
+                        </div>
+                        <div class="position-relative mx-3">
+                            <i style="position: absolute; transform: rotate(90deg);" class="bi bi-airplane"></i>
+                            <i class="bi bi-airplane" style="color: rgba(0,0,0,0);"></i>
+                        </div>
+                        <div>
+                            {{previousFlight()?.arrivalAerodrome}}
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        {{previousFlight()?.flightDate}} - {{previousFlight()?.totalTime}} - {{previousFlight()?.aircraft?.registration}}({{previousFlight()?.aircraft?.aircraftType?.type}})
+                    </div>       
+                </div>
+            }
+        </div>
+        <div class="col-md p-4 border rounded shadow-sm bg-light mx-3 my-1 text-center cursor-pointer user-select-none">
+            <h1>Upcoming Flight</h1>
+                @if(upcomingFlight() == null){
+                <div class="text-muted">
+                    No upcoming flight
+                </div>
+                }
+                @if(upcomingFlight() != null){
+                <div class="row">
+                    <div class="col-12 display-6 d-flex justify-content-center">
+                        <div>
+                            {{upcomingFlight()?.departureAerodrome}}
+                        </div>
+                        <div class="position-relative mx-3">
+                            <i style="position: absolute; transform: rotate(90deg);" class="bi bi-airplane"></i>
+                            <i class="bi bi-airplane" style="color: rgba(0,0,0,0);"></i>
+                        </div>
+                        <div>
+                            {{upcomingFlight()?.arrivalAerodrome}}
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        {{upcomingFlight()?.flightDate}} - {{upcomingFlight()?.totalTime}} - {{upcomingFlight()?.aircraft?.registration}}({{upcomingFlight()?.aircraft?.aircraftType?.type}})
+                    </div>       
+                </div>
+            }
+        </div>
+    </div>
+    <div class="row p-1">
+        <div class="col-md p-4 border rounded shadow-sm bg-light mx-3 my-1 text-center cursor-pointer user-select-none">
+            <h1>Flight time</h1>
+            @if(summary() == null){
+                <div class="text-muted">Summary not available</div>
+            }
+            @if(summary() != null){
+                <div class="row">
+                    <div class="col bg-white rounded shadow-sm m-2 p-3">
+                        <h1>{{summary()?.total?.slice(0,5)}}</h1>
+                        <h2>Total</h2>
+                    </div>
+                    <div class="col bg-white rounded shadow-sm m-2 p-3">
+                        <h1>{{summary()?.pic?.slice(0,5)}}</h1>
+                        <h2>PIC</h2>
+                    </div>
+                    <div class="col bg-white rounded shadow-sm m-2 p-3">
+                        <h1>{{summary()?.night?.slice(0,5)}}</h1>
+                        <h2>Night</h2>
+                    </div>
+                    <div class="col bg-white rounded shadow-sm m-2 p-3">
+                        <h1>{{summary()?.dual?.slice(0,5)}}</h1>
+                        <h2>Dual</h2>
+                    </div>
+                    <div class="col bg-white rounded shadow-sm m-2 p-3">
+                        <h1>{{summary()?.ifr?.slice(0,5)}}</h1>
+                        <h2>IFR</h2>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

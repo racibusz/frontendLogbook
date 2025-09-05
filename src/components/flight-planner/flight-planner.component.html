@@ -1,4 +1,10 @@
 <div class="container py-2">
+    <div class="alert alert-info" role="alert">
+        <p class="mb-0">This flight planner is currently in it's early version, thus it may contain some errors. Always verify data calculated by this form.</p>
+    </div>
+    <div class="alert alert-danger text-center" role="alert">
+        <p class="mb-0">NOT FOR OPERATIONAL USE</p>
+    </div>
     <div class="row gy-1">
         <div class="col-md rounded p-2">
             <h2>1. Flight conditions</h2>
@@ -96,6 +102,22 @@
                                 <td>{{leg.fuel}} l</td>
                             </tr>
                         }
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <th colspan="7" class="text-center">Total</th>
+                            <th>Distance</th>
+                            <th colspan="2"></th>
+                            <th>Time</th>
+                            <th>Fuel</th>
+                        </tr>
+                        <tr>
+                            <th colspan="7" class="text-center">Total</th>
+                            <th>{{summary().totalDistance}}</th>
+                            <th colspan="2"></th>
+                            <th>{{summary().totalTime}}</th>
+                            <th>{{summary().totalFuel}}</th>
+                        </tr>
                     </tbody>
                 </table>
 

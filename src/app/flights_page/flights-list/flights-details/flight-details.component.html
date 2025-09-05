@@ -1,5 +1,5 @@
 
-<div id="flightDetails">
+<div id="flightDetails" style="overflow-y: scroll;">
     <header class="my-2">
         <button class="btn btn-danger rounded-0 w-100 p-3 mb-2" id="deselectButton" (click)="deselect()">Close</button>
         <div class="d-flex p-0 m-0">
@@ -7,14 +7,14 @@
             <button class="btn btn-outline-primary p-5 rounded-0" [class.active]="selectedWindow()==2" (click)="setWindow(2)"><i class="bi bi-map"></i></button>
         </div>
     </header>
-    @if(selectedWindow()==1){
+        @if(selectedWindow()==1){
             @if(unsavedChanges()){
             <div class="mt-1 alert alert-danger" role="alert">
                 <span>You have unsaved changes. Remember to save them before you select another airplane</span>
                 Warning! The time doesn't self-calculate when changing the data from this window
             </div>
             }
-        <div class="user-select-none" style="height: 100vh; overflow-y: scroll;">
+        <div class="user-select-none">
             <header class="p-2 rounded bg-secondary text-light d-flex justify-content-between">
                 Flight details
             </header>
@@ -33,5 +33,4 @@
             </div>
         </div>
     }
-
 </div>

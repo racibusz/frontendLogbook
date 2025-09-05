@@ -35,7 +35,8 @@
     <div class="p-3">
         @if(userWindow()){
             <div class="mb-2">
-                <button [routerLink]="['/logout']" class="btn btn-danger w-100">Logout</button>
+                <button [routerLink]="['/user']" (click)="userBtnClicked()" class="btn btn-secondary w-100 mb-2">Details</button>
+                <button [routerLink]="['/logout']" (click)="userBtnClicked()" class="btn btn-danger w-100">Logout</button>
             </div>
         }
         <button class="btn btn-primary w-100" type="button" (click)="openUserWindow()">
@@ -45,7 +46,7 @@
     </div>
     
 </nav>
-<nav class=" text-light bg-dark justify-content-center d-flex smallNav">
+<nav class="text-light bg-dark justify-content-center d-flex smallNav">
     <div class="d-flex">
         <ul class="navbar-nav d-flex flex-row justify-content-between">
             <li class="nav-item m-2 border rounded">
@@ -76,9 +77,11 @@
         </ul>
     </div>
     @if(userWindow()){
-    <div class="position-absolute bg-dark w-100 mt-5 user-select-none">
-        <div class="position-absolute mt-2">
-            <button [routerLink]="['/logout']" class="btn btn-danger rounded-0" style="width: 100vw;">Logout</button>
+    <div class="position-absolute bg-dark w-100 mt-5 user-select-none py-2" style="z-index: 9999" style="transform: translateY(8px);">
+        <div class="mt-2">
+            <button [routerLink]="['/logout']" (click)="userBtnClicked()" class="btn btn-danger rounded-0" style="width: 100vw;">Logout</button>
+            <hr>
+            <button [routerLink]="['/user']" (click)="userBtnClicked()" class="btn btn-secondary rounded-0" style="width: 100vw;">Details</button>
         </div>
     </div>
 }

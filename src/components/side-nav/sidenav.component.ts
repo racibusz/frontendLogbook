@@ -13,4 +13,7 @@ export class SideNavComponent {
     openUserWindow(){
         this.userWindow.update((prev)=>{return !prev});
     }
+    userBtnClicked(){
+        this.userWindow.set(false);
+    }
 }
