@@ -6,7 +6,7 @@
             </a>
         </div>
         <hr class="mx-3" />
-        <ul class="nav flex-column ps-2">
+        <ul class="nav flex-column ps-2 user-select-none">
             <li class="nav-item">
                 <a [routerLink]="['/flights']" class="nav-link text-light" routerLinkActive="active">
                     <i class="bi bi-airplane-engines me-2"></i> Flights
@@ -28,6 +28,11 @@
                         </a>
                     </li>
                 </ul>
+            </li>
+            <li class="nav-item">
+                <a [routerLink]="['/licenses']" class="nav-link text-light" routerLinkActive="active">
+                    <i class="bi bi-file-earmark-post me-2"></i> Licenses
+                </a>
             </li>
         </ul>
     </div>
@@ -72,6 +77,11 @@
             <li class="nav-item m-2 border rounded">
                 <a [routerLink]="['/flights', 'logbook']" class="nav-link text-light p-2" routerLinkActive="active">
                     <i class="bi bi-table m-2"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a [routerLink]="['/licenses']" class="nav-link text-light" routerLinkActive="active">
+                    <i class="bi bi-file-earmark-post"></i>
                 </a>
             </li>
         </ul>

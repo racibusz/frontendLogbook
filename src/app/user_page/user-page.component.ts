@@ -27,7 +27,7 @@ export class UserPageComponent {
     saveChanges(){
         this.changes.set(false);
         this.apiService.postData('user', this.user()).subscribe({
-            next: (data)=>{this.getData(); console.log(data)},
+            next: (data)=>{this.user.set(data)},
             error: (err)=>{throw err}
         })
     }

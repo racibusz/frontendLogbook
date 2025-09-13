@@ -19,6 +19,11 @@ export const routes: Routes = [
         loadComponent: () => import('./user_page/user-page.component').then(m=>m.UserPageComponent),
     },
     {
+        path: 'licenses',
+        canActivate: [authGuard],
+        loadComponent: () => import('./licenses_page/licenses-page.component').then(m=>m.LicensesPageComponent),
+    },
+    {
         canActivate: [authGuard],
         path: 'flights',
         loadComponent: () => import('./flights_page/flights-page.component').then(m => m.FlightsPageComponent),
