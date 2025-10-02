@@ -3,18 +3,19 @@
         <h1><i class="bi bi-file-earmark-post me-2"></i>Licenses and endorsements</h1>
         <p>You can store information about your licenses using this page.</p>
     </div>
+    @for(license of licenses(); track license){
     <div class="border rounded shadow-sm bg-light p-3 my-2 row mx-0">
         <div class="col-md">
-            <h2>PPL(A) - Private Pilot's license (Airplanes)</h2>
+            <h2>{{license.number}}</h2>
             <table class="table table-light">
                 <tbody>
                     <tr>
                         <td>Date of issue</td>
-                        <td>2025-01-01</td>
+                        <td>{{license.dateOfIssue}}</td>
                     </tr>
                     <tr>
                         <td>License number</td>
-                        <td>{{license()?.number}}</td>
+                        <td>{{license.number}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -22,8 +23,8 @@
         <div class="col-md">
             <h2>Endorsements</h2>
             <div class="row">
-                @for (endorsement of license()?.endorsements; track endorsement) {
-                <div class="col-md-6 p-3 m-1 border rounded shadow-sm bg-light text-cente">
+                @for (endorsement of license?.endorsements; track endorsement) {
+                <div class="col-md p-3 m-1 border rounded shadow-sm bg-light text-cente">
                     <h2>{{ endorsement.name }}</h2>
                         <table class="table table-light">
                             <tbody>
@@ -50,6 +51,7 @@
             </div>
         </div>
     </div>
+    }
     <!-- <div class="row my-2">
         <div class="col-md-4 p-3 m-1 border rounded shadow-sm bg-light text-center">
             <h2>PPL(A)</h2>

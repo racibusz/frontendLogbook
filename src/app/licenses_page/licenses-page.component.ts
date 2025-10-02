@@ -13,10 +13,10 @@ import { CommonModule } from "@angular/common";
 })
 export class LicensesPageComponent {
     constructor(private apiService:ApiService){}
-    license = signal<undefined|LicenseDTO>(undefined);
+    licenses = signal<undefined|LicenseDTO[]>(undefined);
     getData(){
         this.apiService.getData('license').subscribe({
-            next: (data)=>{this.license.set(data[0]); console.log(this.license())},
+            next: (data)=>{this.licenses.set(data); console.log(this.licenses())},
             error: (err)=>{throw err},
         })
     }
