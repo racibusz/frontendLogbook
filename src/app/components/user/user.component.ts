@@ -2,7 +2,7 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 import { TokenService } from '../../services/token.service';
 import { Signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import {ApiService} from '../../services/api.service';
 import { RouterModule } from '@angular/router';
 
@@ -10,7 +10,7 @@ import { RouterModule } from '@angular/router';
     selector: 'app-user',
     templateUrl: './user.component.html',
     styleUrls: ['./user.component.scss'],
-    imports: [MatIconModule, CommonModule, RouterModule]
+    imports: [MatIconModule, RouterModule]
 })
 export class UserComponent {
     user = signal<null|string>(null);

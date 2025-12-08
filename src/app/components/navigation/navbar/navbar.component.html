@@ -1,14 +1,20 @@
 <nav>
-    <app-logo></app-logo>
+  <app-logo></app-logo>
 
-    <div>
-        <ul>
-            <a [routerLink]="'/'" ><li>Strona Główna</li></a>
-            <a [routerLink]="'/login'" *ngIf="!loggedIn()"><li>Logowanie</li></a>
-            <a [routerLink]="'/account'" *ngIf="loggedIn()" ><li>Konto</li></a>
-            <a [routerLink]="'/panel'" *ngIf="loggedIn()" ><li>Panel</li></a>
-        </ul>
-    </div>
+  <div>
+    <ul>
+      <a [routerLink]="'/'" ><li>Strona Główna</li></a>
+      @if (!loggedIn()) {
+        <a [routerLink]="'/login'"><li>Logowanie</li></a>
+      }
+      @if (loggedIn()) {
+        <a [routerLink]="'/account'" ><li>Konto</li></a>
+      }
+      @if (loggedIn()) {
+        <a [routerLink]="'/panel'" ><li>Panel</li></a>
+      }
+    </ul>
+  </div>
 
-    <app-user></app-user>
+  <app-user></app-user>
 </nav>

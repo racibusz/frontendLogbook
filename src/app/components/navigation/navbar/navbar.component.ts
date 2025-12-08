@@ -4,13 +4,13 @@ import { UserComponent } from '../../user/user.component';
 import { TokenService } from '../../../services/token.service';
 import { signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
     selector: 'app-navbar',
     templateUrl: './navbar.component.html',
     styleUrls: ['./navbar.component.scss'],
-    imports: [LogoComponent, UserComponent, RouterModule, CommonModule],
+    imports: [LogoComponent, UserComponent, RouterModule],
     standalone: true
 })
 export class NavbarComponent {

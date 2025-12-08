@@ -1,14 +1,18 @@
-<div class="user-container" *ngIf="user()!=null">
+@if (user()!=null) {
+  <div class="user-container">
     <span>
-        {{userName()}}
+      {{userName()}}
     </span>
     <mat-icon>person</mat-icon>
-</div>
+  </div>
+}
 <a [routerLink]="'/login'">
-    <div class="user-container" *ngIf="user()==null">
-        <span>
-            Niezalogowano
-        </span>
-        <!-- <mat-icon>person</mat-icon> -->
+  @if (user()==null) {
+    <div class="user-container">
+      <span>
+        Niezalogowano
+      </span>
+      <!-- <mat-icon>person</mat-icon> -->
     </div>
+  }
 </a>
