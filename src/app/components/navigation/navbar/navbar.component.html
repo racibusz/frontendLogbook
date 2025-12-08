@@ -1,0 +1,14 @@
+<nav>
+    <app-logo></app-logo>
+
+    <div>
+        <ul>
+            <a [routerLink]="'/'" ><li>Strona Główna</li></a>
+            <a [routerLink]="'/login'" *ngIf="!loggedIn()"><li>Logowanie</li></a>
+            <a [routerLink]="'/account'" *ngIf="loggedIn()" ><li>Konto</li></a>
+            <a [routerLink]="'/panel'" *ngIf="loggedIn()" ><li>Panel</li></a>
+        </ul>
+    </div>
+
+    <app-user></app-user>
+</nav>

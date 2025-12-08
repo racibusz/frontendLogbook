@@ -1,0 +1,20 @@
+.logo-logbook{
+    text-align: center;
+    font-size: 1.2rem;
+    vertical-align: middle;
+    line-height: 60px;
+    padding: 0 12px;
+    user-select: none;
+    color: var(--text-secondary-color);
+}
+.reversed-logo-logbook{
+    color: var(--text-color-reversed);
+}
+.logo-book{
+    font-weight: bold;
+    letter-spacing: -10%;
+    color: var(--text-black-color);
+}
+.reversed-logo-book{
+    color: var(--text-color-reversed-highlighted);
+}

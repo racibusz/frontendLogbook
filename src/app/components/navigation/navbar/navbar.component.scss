@@ -1,0 +1,25 @@
+nav{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 15px;
+}
+ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    line-height: 60px;
+    gap: 15px;
+    color: var(--text-secondary-color);
+}
+li:hover{
+    color: var(--text-secondary-color-hover);
+}
+li{
+    transition-duration: .2s;
+    cursor: pointer;
+}
+a{
+    color: var(--text-secondary-color);
+    text-decoration: none;
+}
