@@ -28,7 +28,6 @@
     position: relative;
     .processing{
         background-color: var(--background);
-        text-align: center;
         flex-direction: column;
         justify-content: center;
         display: flex;
@@ -37,6 +36,10 @@
         height: 100%;
         top: 0;
         left: 0;
+        div{
+            display: flex;
+            justify-content: center;
+        }
     }
     .error{
         color: red;

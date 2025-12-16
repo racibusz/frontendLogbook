@@ -2,11 +2,12 @@
 import { Component, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CommonModule } from '@angular/common';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner'; 
 
 @Component({
     selector: 'app-login-page',
-    imports: [ReactiveFormsModule, MatProgressSpinnerModule],
+    imports: [ReactiveFormsModule, CommonModule, MatProgressSpinnerModule],
     templateUrl: './loginPage.component.html',
     styleUrls: ['./loginPage.component.scss']
 })

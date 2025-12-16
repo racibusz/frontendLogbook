@@ -3,6 +3,7 @@ import { LogoComponent } from '../../logo/logo.component';
 import { UserComponent } from '../../user/user.component';
 import { TokenService } from '../../../services/token.service';
 import { signal } from '@angular/core';
+import {MatToolbarModule} from '@angular/material/toolbar'
 import { RouterModule } from '@angular/router';
 
 
@@ -10,7 +11,7 @@ import { RouterModule } from '@angular/router';
     selector: 'app-navbar',
     templateUrl: './navbar.component.html',
     styleUrls: ['./navbar.component.scss'],
-    imports: [LogoComponent, UserComponent, RouterModule],
+    imports: [LogoComponent, UserComponent, RouterModule, MatToolbarModule],
     standalone: true
 })
 export class NavbarComponent {
