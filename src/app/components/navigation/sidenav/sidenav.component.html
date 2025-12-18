@@ -1,0 +1,14 @@
+  <div>
+    <ul>
+      <a [routerLink]="'/'" ><li>Strona Główna</li></a>
+      @if (!loggedIn()) {
+        <a [routerLink]="'/login'"><li>Logowanie</li></a>
+      }
+      @if (loggedIn()) {
+        <a [routerLink]="'/account'" ><li>Konto</li></a>
+      }
+      @if (loggedIn()) {
+        <a [routerLink]="'/panel'" ><li>Panel</li></a>
+      }
+    </ul>
+  </div>

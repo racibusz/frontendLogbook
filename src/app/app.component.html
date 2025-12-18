@@ -1,7 +1,10 @@
-<app-navbar></app-navbar>
-<!-- <router-outlet></router-outlet> -->
-<div class="app-container">
-    <router-outlet></router-outlet>
-</div>
-
- <app-footer></app-footer>
+<app-navbar [isMobile]="isMobile" [loggedIn]="isLoggedIn" [sideNavOpened]="sideNavOpened"></app-navbar>
+<mat-sidenav-container class="example-container">
+    <mat-sidenav #sidenav mode="side" opened="{{!isMobile() || sideNavOpened()}}">
+        <app-sidenav [isMobile]="isMobile" [loggedIn]="isLoggedIn"></app-sidenav>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+<app-footer></app-footer>

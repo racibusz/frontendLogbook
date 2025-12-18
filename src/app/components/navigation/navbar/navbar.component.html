@@ -1,20 +1,10 @@
 <mat-toolbar>
-  <app-logo></app-logo>
-
   <div>
-    <ul>
-      <a [routerLink]="'/'" ><li>Strona Główna</li></a>
-      @if (!loggedIn()) {
-        <a [routerLink]="'/login'"><li>Logowanie</li></a>
-      }
-      @if (loggedIn()) {
-        <a [routerLink]="'/account'" ><li>Konto</li></a>
-      }
-      @if (loggedIn()) {
-        <a [routerLink]="'/panel'" ><li>Panel</li></a>
-      }
-    </ul>
+    <div *ngIf="isMobile()">
+      <button (click)="sideNavOpened.set(!sideNavOpened())" matIconButton aria-label="A button with a menu icon, used to open sidenav">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+    <app-logo></app-logo>
   </div>
-
-  <app-user></app-user>
 </mat-toolbar>

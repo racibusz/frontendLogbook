@@ -3,9 +3,7 @@ footer{
     flex-direction: column;
     justify-content: space-between;
     vertical-align: middle;
-    background-color: var(--background-secondary-color);
-    color: var(--text-color-reversed);
-    min-height: 200px;
+    background-color: mat.get-color-from-palette(colors.$primary-palette, 500);
     padding: 15px;
     user-select: none;
 }

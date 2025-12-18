@@ -10,16 +10,20 @@ ul{
     display: flex;
     line-height: 60px;
     gap: 15px;
-    color: var(--text-secondary-color);
-}
-li:hover{
-    color: var(--text-secondary-color-hover);
+    font-size: 16px;
 }
 li{
     transition-duration: .2s;
     cursor: pointer;
 }
 a{
-    color: var(--text-secondary-color);
     text-decoration: none;
+}
+div{
+    display: flex;
+    div{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
 }
