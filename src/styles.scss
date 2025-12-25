@@ -9,7 +9,7 @@
 @import './theme-colors';
 html {
   @include mat.theme((
-    color: mat.define-light-theme((
+    color: mat.m2-define-light-theme((
       primary: map.get($_palettes, primary),
       secondary: map.get($_palettes, secondary),
       tertiary: map.get($_palettes, tertiary),
