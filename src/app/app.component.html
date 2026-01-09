@@ -1,6 +1,6 @@
 <app-navbar [isMobile]="isMobile" [loggedIn]="isLoggedIn" [sideNavOpened]="sideNavOpened"></app-navbar>
 <mat-sidenav-container class="example-container">
-    <mat-sidenav #sidenav mode="side" opened="{{!isMobile() || sideNavOpened()}}">
+    <mat-sidenav #sidenav [mode]="isMobile() ? 'over' : 'side'" opened="{{!isMobile() || sideNavOpened()}}">
         <app-sidenav [isMobile]="isMobile" [loggedIn]="isLoggedIn"></app-sidenav>
     </mat-sidenav>
     <mat-sidenav-content>

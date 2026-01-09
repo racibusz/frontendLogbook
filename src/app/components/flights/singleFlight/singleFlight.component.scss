@@ -1,0 +1,19 @@
+mat-card{
+    display: inline-block;
+    mat-card-content{
+        display: flex;
+        gap: 10px;
+        div.column{
+            justify-content: space-between;
+            vertical-align: middle;
+            div{
+                display: flex;
+                justify-content: space-between;
+                gap: 15px;
+            }
+        }
+    }
+}
+mat-card.active{
+    background-color: var(--active-element-background);
+}

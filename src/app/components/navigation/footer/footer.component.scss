@@ -3,7 +3,8 @@ footer{
     flex-direction: column;
     justify-content: space-between;
     vertical-align: middle;
-    background-color: mat.get-color-from-palette(colors.$primary-palette, 500);
+    background-color: var(--mat-sys-secondary);
+    color: var(--mat-sys-on-secondary);
     padding: 15px;
     user-select: none;
 }

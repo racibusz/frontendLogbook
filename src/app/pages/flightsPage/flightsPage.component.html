@@ -1,0 +1,18 @@
+@if(isMobile()){
+<div class="mobile-header">
+    <button (click)="drawerOpened.set(!drawerOpened())" matIconButton aria-label="A button with a menu icon, used to open drawer">
+        <mat-icon>menu</mat-icon>
+    </button>
+</div>
+}
+<div class="flights-page">
+    <mat-drawer-container class="example-container">
+        <mat-drawer mode="side" opened="{{!isMobile() || drawerOpened() || !selectedFlight()}}">
+            <app-flight-list [flights]="flights" [selectedFlight]="selectedFlight"></app-flight-list>
+        </mat-drawer>
+        <mat-drawer-content>
+            <app-flight-details [flight]="selectedFlight"></app-flight-details>
+        </mat-drawer-content>
+    </mat-drawer-container>
+
+</div>

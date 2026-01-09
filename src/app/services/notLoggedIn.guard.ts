@@ -4,7 +4,7 @@ import { CanActivateFn } from '@angular/router';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { TokenService } from '../services/token.service';
-export const authGuard: CanActivateFn = () => {
+export const notLoggedInGuard: CanActivateFn = () => {
   const platformId = inject(PLATFORM_ID);
 
   if (!isPlatformBrowser(platformId)) {
@@ -13,11 +13,12 @@ export const authGuard: CanActivateFn = () => {
 
   const tokenService = inject(TokenService);
   const token = tokenService.getToken();
+  const router = inject(Router);
 
   if (token) {
+    return router.parseUrl('/dashboard');
+  }
+  else{
     return true;
   }
-
-  const router = inject(Router);
-  return router.parseUrl('/login');
 };

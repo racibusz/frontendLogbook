@@ -4,6 +4,11 @@
     padding: 0;
 }
 .app-container{
-    background-color: var(--background);
-    color: var(--text-black-color);
+    background-color: var(--mat-sys-background);
+    color: var(--mat-sys-on-background);
+}
+mat-sidenav{
+    border-radius: 0;
+    background-color: var(--mat-sys-surface-container-lowest);
+    color: var(--mat-sys-on-surface-container-lowest);
 }

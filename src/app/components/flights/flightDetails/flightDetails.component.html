@@ -1,0 +1,144 @@
+@if(flight()!=null){
+<div class="flightDetails">
+    <mat-card>
+        <!-- <mat-card-header>
+            <mat-card-title>
+                <mat-icon>airplanemode_active</mat-icon>
+            </mat-card-title>
+        </mat-card-header> -->
+        <mat-card-content>
+            <table>
+                <tr>
+                    <th><mat-icon>airplanemode_active</mat-icon></th>
+                    <td>{{flight()!.aircraft.registration}} ({{flight()!.aircraft.aircraftType.type}})</td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td>{{flight()!.aircraft.aircraftType.model}}</td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td>{{flight()!.aircraft.aircraftType.category}}</td>
+                </tr>
+            </table>
+        </mat-card-content>
+    </mat-card>
+    <mat-card>
+        <!-- <mat-card-header>
+            <mat-card-title>
+                <mat-icon>timer</mat-icon>
+            </mat-card-title>
+        </mat-card-header> -->
+        <mat-card-content>
+            <table>
+                <tr>
+                    <th></th>
+                    <th>
+                        <mat-icon>map</mat-icon>
+                    </th>
+                    <th>
+                        <mat-icon>timer</mat-icon>
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        <mat-icon>flight_takeoff</mat-icon>
+                    </th>
+                    <td>
+                        {{flight()!.departureAerodrome}}
+                    </td>
+                    <td>
+                        {{flight()!.departureTime.toString().slice(0, -3)}}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <mat-icon>flight_land</mat-icon>
+                    </th>
+                    <td>
+                        {{flight()!.arrivalAerodrome}}
+                    </td>
+                    <td>
+                        {{flight()!.arrivalTime.toString().slice(0, -3)}}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="9">
+                        <hr>
+                    </td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <td>{{flight()!.totalTime}}</td>
+                </tr>
+            </table>
+        </mat-card-content>
+    </mat-card>
+    <mat-card>
+        <!-- <mat-card-header>
+            <mat-card-title>
+                <mat-icon>timer</mat-icon>
+            </mat-card-title>
+        </mat-card-header> -->
+        <mat-card-content>
+            <table>
+                <tr>
+                    <th></th>
+                    <th>
+                        <mat-icon>map</mat-icon>
+                    </th>
+                    <th>
+                        <mat-icon>timer</mat-icon>
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        <mat-icon>flight_takeoff</mat-icon>
+                    </th>
+                    <td>
+                        {{flight()!.departureAerodrome}}
+                    </td>
+                    <td>
+                        {{flight()!.departureTime.toString().slice(0, -3)}}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <mat-icon>flight_land</mat-icon>
+                    </th>
+                    <td>
+                        {{flight()!.arrivalAerodrome}}
+                    </td>
+                    <td>
+                        {{flight()!.arrivalTime.toString().slice(0, -3)}}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="9">
+                        <hr>
+                    </td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <td>{{flight()!.totalTime}}</td>
+                </tr>
+            </table>
+        </mat-card-content>
+    </mat-card>
+    
+    
+
+</div>
+}

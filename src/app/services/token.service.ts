@@ -1,25 +1,30 @@
-import { Injectable, signal } from "@angular/core";
+import { Injectable, signal } from '@angular/core';
 
-@Injectable()
-export class TokenService{
-    private TOKEN_KEY = 'jwtToken';
-    constructor(){
-        this.getToken();
+@Injectable({ providedIn: 'root' })
+export class TokenService {
+  private TOKEN_KEY = 'jwtToken';
+
+  private _token = signal<string | null>(this.getToken());
+
+  readonly token = this._token.asReadonly();
+
+  getToken(): string | null {
+    if (typeof window === 'undefined') return null;
+    const token = sessionStorage.getItem(this.TOKEN_KEY);
+    return token && token !== 'undefined' ? token : null;
+  }
+
+  setToken(token: string): void {
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem(this.TOKEN_KEY, token);
     }
-    public setToken(token:string) : void{
-        if (typeof window !== 'undefined') {
-            sessionStorage.setItem(this.TOKEN_KEY, token);
-        }
+    this._token.set(token);
+  }
+
+  removeToken(): void {
+    if (typeof window !== 'undefined') {
+      sessionStorage.removeItem(this.TOKEN_KEY);
     }
-    public getToken() : string | null{
-        if (typeof window !== 'undefined') {
-            return sessionStorage.getItem(this.TOKEN_KEY);
-        }
-        return null
-    }
-    public removeToken() : void {
-        if(typeof window == 'undefined')
-            return
-        sessionStorage.removeItem(this.TOKEN_KEY);
-    }
+    this._token.set(null);
+  }
 }

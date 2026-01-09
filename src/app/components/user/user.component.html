@@ -1,18 +1,34 @@
-@if (user()!=null) {
   <div class="user-container">
-    <span>
-      {{userName()}}
-    </span>
-    <mat-icon>person</mat-icon>
+    @if(token()!=null){
+      <!-- <a routerLink="/account">
+        <span>
+          Zalogowano
+        </span>
+        <mat-icon>person</mat-icon>
+      </a> -->
+      <button class="loggedInButton" matButton [matMenuTriggerFor]="menu">
+        <span>Zalogowano</span>
+        <mat-icon>person</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item routerLink="/logout">
+          Wyloguj
+          <mat-icon>logout</mat-icon>
+        </button>
+      </mat-menu>
+
+    }
+    @if(token()==null){
+      <!-- <a routerLink="/login">
+        <span>
+          Zaloguj
+        </span>
+        <mat-icon>login</mat-icon>
+      </a> -->
+      <button class="loggedInButton" matButton routerLink="/login">
+        <span>Zaloguj</span>
+        <mat-icon>person</mat-icon>
+      </button>
+    }
+    
   </div>
-}
-<a [routerLink]="'/login'">
-  @if (user()==null) {
-    <div class="user-container">
-      <span>
-        Niezalogowano
-      </span>
-      <!-- <mat-icon>person</mat-icon> -->
-    </div>
-  }
-</a>

@@ -1,14 +1,14 @@
   <div>
     <ul>
-      <a [routerLink]="'/'" ><li>Strona Główna</li></a>
+      <a [routerLink]="'/'" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><li>Strona Główna</li></a>
       @if (!loggedIn()) {
-        <a [routerLink]="'/login'"><li>Logowanie</li></a>
+        <a [routerLink]="'/login'" [routerLinkActive]="['active']"><li>Logowanie</li></a>
+        <a [routerLink]="'/register'" [routerLinkActive]="['active']"><li>Rejestracja</li></a>
       }
       @if (loggedIn()) {
-        <a [routerLink]="'/account'" ><li>Konto</li></a>
-      }
-      @if (loggedIn()) {
-        <a [routerLink]="'/panel'" ><li>Panel</li></a>
+        <a [routerLink]="'/dashboard'" [routerLinkActive]="['active']" ><li>Panel</li></a>
+        <a [routerLink]="'/flights'" [routerLinkActive]="['active']" ><li>Loty</li></a>
+        <a [routerLink]="'/account'" [routerLinkActive]="['active']" ><li>Konto</li></a>
       }
     </ul>
   </div>

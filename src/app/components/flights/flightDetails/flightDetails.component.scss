@@ -1,0 +1,17 @@
+.flightDetails{
+    margin-left: 1rem;
+    display: grid;
+    gap: 1rem;
+    th{
+        padding: 0 .5rem;
+        text-align: left;
+    }
+    th:has(mat-icon){
+        text-align: center;
+        vertical-align: middle;
+    }
+    td{
+        text-align: justify;
+        padding: 0 .5rem;
+    }
+}

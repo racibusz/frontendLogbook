@@ -10,16 +10,15 @@
 //     margin-top: 10%;
 //     padding: 3rem 2rem;
 // }
-.login-page{
+.register-page{
     display: flex;
 }
 .hero{
-    width: 70%;
+    width: 50%;
     background-color: var(--mat-sys-background);
 }
 .form{
     margin: 50px;
-    width: 30%;
     padding: 50px;
     border-radius: 1rem;
     display: flex;
@@ -27,15 +26,9 @@
     flex-direction: column;
     position: relative;
     background-color: var(--mat-sys-surface-container-lowest);
-    .full-width{
-        width: 100%;
-    }
-    button{
-        margin-top: 20px;
-    }
+
     .processing{
-        background-color: var(--mat-sys-surface-container-lowest);
-        z-index: 10;
+        background-color: var(--mat-sys-background);
         flex-direction: column;
         justify-content: center;
         display: flex;
@@ -45,21 +38,37 @@
         top: 0;
         left: 0;
         div{
-            padding: 50px;
-        }
-        div.spinner{
             display: flex;
             justify-content: center;
         }
     }
+    .full-width{
+        width: 100%;
+    }
+
 }
 @media screen and (max-width: 600px) {
     .hero{
         display: none;
     }
+    .fields{
+        display: block;
+        div{
+            padding: 10px 0px;
+        }
+    }
     .form{
         width: 90%;
         margin: 20px;
         padding: 20px;
+    }
+}
+@media screen and (min-width: 600px) {
+    .fields{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        div{
+            padding: 20px;
+        }
     }
 }
