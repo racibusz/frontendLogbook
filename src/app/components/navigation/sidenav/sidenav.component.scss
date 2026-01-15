@@ -4,6 +4,11 @@ ul{
     margin: 0;
     li{
         padding: 15px 10px;
+        display: flex;
+        gap: 15px;
+        mat-icon{
+            vertical-align: middle;
+        }
     }
 }
 

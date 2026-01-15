@@ -4,3 +4,7 @@
     <app-single-flight [flight]="flight" [selectedFlight]="selectedFlight"></app-single-flight>
 }
 </div>
+
+@if(flights()==null){
+    <app-shimmering-list></app-shimmering-list>
+}

@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal, WritableSignal } from '@angular/core';
+import { Component, OnInit, inject, signal, WritableSignal, effect } from '@angular/core';
 import {ApiService} from "../../services/api.service";
 import {FlightDTO} from "../../DTOs/flightDTO";
 import {FlightListComponent} from '../../components/flights/flightList/flightList.component';
@@ -23,9 +23,16 @@ export class FlightsPageComponent implements OnInit {
     drawerOpened = signal(false);
     constructor(apiService: ApiService) { 
         this.apiService = apiService;
+        effect(()=>{
+            this.selectedFlight()
+            this.drawerOpened.set(false);
+            if(this.selectedFlight() == null){
+                this.getFlights();
+            }
+        })
     }
     ngOnInit(): void {
-        this.getFlights();
+        // this.getFlights();
     }
     getFlights(){
         this.apiService.getData("flights").subscribe({

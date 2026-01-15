@@ -6,9 +6,10 @@
         <a [routerLink]="'/register'" [routerLinkActive]="['active']"><li>Rejestracja</li></a>
       }
       @if (loggedIn()) {
-        <a [routerLink]="'/dashboard'" [routerLinkActive]="['active']" ><li>Panel</li></a>
-        <a [routerLink]="'/flights'" [routerLinkActive]="['active']" ><li>Loty</li></a>
-        <a [routerLink]="'/account'" [routerLinkActive]="['active']" ><li>Konto</li></a>
+        <a [routerLink]="'/dashboard'" [routerLinkActive]="['active']" ><li><mat-icon>dashboard</mat-icon><div>Panel</div></li></a>
+        <a [routerLink]="'/aircraft'" [routerLinkActive]="['active']" ><li><mat-icon>flightmode_active</mat-icon><div>Samoloty</div></li></a>
+        <a [routerLink]="'/flights'" [routerLinkActive]="['active']" ><li><mat-icon>flight_takeoff</mat-icon><div>Loty</div></li></a>
+        <a [routerLink]="'/account'" [routerLinkActive]="['active']" ><li><mat-icon>person</mat-icon><div>Konto</div></li></a>
       }
     </ul>
   </div>

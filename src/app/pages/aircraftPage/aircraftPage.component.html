@@ -5,13 +5,13 @@
     </button>
 </div>
 }
-<div class="flights-page">
+<div class="aircraft-page">
     <mat-drawer-container>
-        <mat-drawer mode="side" opened="{{!isMobile() || drawerOpened() || !selectedFlight()}}">
-            <app-flight-list [flights]="flights" [selectedFlight]="selectedFlight"></app-flight-list>
+        <mat-drawer mode="side" opened="{{!isMobile() || drawerOpened() || !selectedAircraft()}}">
+            <app-aircraft-list [aircraft]="aircraft" [selectedAircraft]="selectedAircraft"></app-aircraft-list>
         </mat-drawer>
         <mat-drawer-content>
-            <app-flight-details [flight]="selectedFlight"></app-flight-details>
+            <app-aircraft-details [aircraft]="selectedAircraft"></app-aircraft-details>
         </mat-drawer-content>
     </mat-drawer-container>
 

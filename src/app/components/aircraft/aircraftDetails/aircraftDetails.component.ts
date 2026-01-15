@@ -9,33 +9,34 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
-import { ContenteditableFieldDirective } from './contenteditable.directive';
+import { ContenteditableFieldDirective } from '../../flights/flightDetails/contenteditable.directive';
 import {ShimmeringDetailsComponent} from './shimmeringDetails/shimmeringDetails.component';
 import {CreateFlightDTO} from '../../../DTOs/createFlightDTO';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {Sections} from './sections';
 import {ApiService} from '../../../services/api.service';
 import { error } from 'console';
+import { AirplaneDTO } from '../../../DTOs/airplaneDTO';
 
 @Component({
-    selector: 'app-flight-details',
+    selector: 'app-aircraft-details',
     standalone: true,
     imports: [CommonModule, MatCardModule, MatIconModule, MatTableModule, FormsModule, MatInputModule, MatButtonModule, MatButtonToggleModule, ContenteditableFieldDirective, ShimmeringDetailsComponent, MatDialogModule],
-    templateUrl: './flightDetails.component.html',
-    styleUrls: ['./flightDetails.component.scss']
+    templateUrl: './aircraftDetails.component.html',
+    styleUrls: ['./aircraftDetails.component.scss']
 })
-export class FlightDetailsComponent{
-    @Input() flight!: WritableSignal<FlightDTO | null>;
-    changes = signal<FlightDTO | null>(null);
+export class AircraftDetailsComponent{
+    @Input() aircraft!: WritableSignal<AirplaneDTO | null>;
+    changes = signal<AirplaneDTO | null>(null);
     shimmer = signal<boolean>(true);
     private _snackBar = inject(MatSnackBar);
     private _apiService = inject(ApiService);
     sections: Sections = new Sections();
     readonly dialog = inject(MatDialog);
     getFieldValue(fieldPath: string) {
-        const flight = this.flight();
-        if (!flight) return '';
-        let val = fieldPath.split('.').reduce((obj: any, key) => obj?.[key], flight as any).toString();
+        const aircraft = this.aircraft();
+        if (!aircraft) return '';
+        let val = fieldPath.split('.').reduce((obj: any, key) => obj?.[key], aircraft as any).toString();
         if(val==undefined)
             return "";
         if(val.endsWith(":00")){
@@ -46,73 +47,16 @@ export class FlightDetailsComponent{
 
     constructor() {
         effect(() => {
-            this.flight();
+            this.aircraft();
             this.resetDOM()
             this.changes.set(null);
         });
     }
 
-    deleteFlight(){
-        const dialogRef = this.dialog.open(Dialog);
-        let instance = dialogRef.componentInstance;
-        instance.text = "Potwierdź usunięcie lotu";
-        dialogRef.afterClosed().subscribe(result => {
-            if(result == true){
-                this._apiService.postData('flights/remove', {id: this.flight()?.id}).subscribe({
-                    next: () => {
-                        this.changes.set(null);
-                        this.flight.set(null);
-                    },
-                    error: (err)=>{
-                        console.log(err);
-                    }
-                })
-            }
-        });
-    }
-
-    saveChanges(){
-        const flightId = this.changes()?.id;
-        if(!flightId)
-            return;
-        const modifyFlightDTO:CreateFlightDTO = {
-            departureAerodrome: this.changes()!.departureAerodrome,
-            departureTime: this.changes()!.departureTime.toString(),
-            arrivalAerodrome: this.changes()!.arrivalAerodrome,
-            arrivalTime: this.changes()!.arrivalTime.toString(),
-            flightDate: this.changes()!.flightDate,
-            aircraftRegistration: this.changes()!.aircraft.registration,
-            aircraftTypeId: this.changes()!.aircraft.aircraftType.id,
-            SinglePilotSeTime: this.changes()!.SinglePilotSeTime,
-            SinglePilotMeTime: this.changes()!.SinglePilotMeTime,
-            multiPilotTime: this.changes()!.multiPilotTime,
-            totalTime: this.changes()!.totalTime,
-            picName: this.changes()!.picName,
-            landingsDay: this.changes()!.landingsDay,
-            landingsNight: this.changes()!.landingsNight,
-            flightConditionNightTime: this.flight()!.flightConditionNightTime,
-            flightConditionIfrTime: this.changes()!.flightConditionIfrTime,
-            picTime: this.changes()!.picTime,
-            copilotTime: this.changes()!.copilotTime,
-            dualTime: this.changes()!.dualTime,
-            instructorTime: this.changes()!.instructorTime,
-            remarks: this.changes()!.remarks,
-        }
-        console.log(modifyFlightDTO);
-        this._apiService.postData('flights/modify', {flightDTO: modifyFlightDTO, flightId: this.flight()!.id}).subscribe({
-            next: (res)=>{
-                console.log(res)
-            },
-            error: (err)=>{
-                console.log(err);
-            }
-        })
-    }
-
     switchEditing(){
         if(this.changes() === null){
             let snackBar = this._snackBar.open('Edytuj tylko pola o ciemniejszym kolorze!', '', {duration: 3000});
-            this.changes.set(JSON.parse(JSON.stringify(this.flight())));
+            this.changes.set(JSON.parse(JSON.stringify(this.aircraft())));
         } else {
             const dialogRef = this.dialog.open(Dialog);
             let instance = dialogRef.componentInstance;
@@ -125,6 +69,11 @@ export class FlightDetailsComponent{
             });
         }
     }
+
+    saveChanges(){
+        
+    }
+
     resetDOM(){
         this.shimmer.set(true);
         setTimeout(()=>{this.shimmer.set(false)}, 350);

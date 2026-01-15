@@ -1,4 +1,4 @@
-.flightDetails{
+.aircraftDetails{
     background-color: var(--mat-sys-surface-container-lowest);
     width: calc(100% - 2rem);
     height: calc(100% - 2rem);
@@ -38,7 +38,7 @@
         }
     }
 }
-.flightDetails:has(div.noFlightSelectedInfo){
+.aircraftDetails:has(div.noAircraftSelectedInfo){
     text-align: center;
     display: flex;
     flex-direction: column;

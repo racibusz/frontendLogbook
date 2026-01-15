@@ -54,7 +54,7 @@ export class LoginPageComponent {
                 },
                 error: (error) => {
                     this.processing.set(false);
-                    this.loginError.set("Nieprawidłowe dane logowania: " + (error.error?.message || 'Spróbuj ponownie później.'));
+                    this.loginError.set("Nieprawidłowe dane logowania:" + (error?.message || 'Spróbuj ponownie później.'));
                 }
             });
         }

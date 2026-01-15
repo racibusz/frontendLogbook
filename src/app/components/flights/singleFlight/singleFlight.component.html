@@ -2,28 +2,40 @@
     <mat-card-content>
         <div class="column">
             <div>
+                <mat-icon>calendar_today</mat-icon>
+                {{flight.flightDate}}
+            </div>
+            <div>
                 <!-- {{flight.departureAerodrome}}
                 -
                 {{flight.arrivalAerodrome}} -->
                 <mat-icon>airplanemode_active</mat-icon>
                 {{flight.aircraft.registration}}
             </div>
+        </div>
+        <div class="column">
             <div>
-                <mat-icon>calendar_today</mat-icon>
-                {{flight.flightDate}}
+                <mat-icon>flight_takeoff</mat-icon>
+                {{flight.departureAerodrome}}
+            </div>
+            <div>
+                <mat-icon>access_time</mat-icon>
+                <!-- {{flight.totalTime}} -->
+                {{flight.departureTime.toString().slice(0, -3)}}
+                -
+                {{flight.arrivalTime.toString().slice(0, -3)}}
             </div>
         </div>
         <div class="column">
             <div>
-                {{flight.departureAerodrome}}
-                -
+                <mat-icon>flight_landing</mat-icon>
                 {{flight.arrivalAerodrome}}
-                <mat-icon>map</mat-icon>
             </div>
             <div>
+                <mat-icon>timelapse</mat-icon>
                 {{flight.totalTime}}
-                <mat-icon>access_time</mat-icon>
             </div>
         </div>
+
   </mat-card-content>
 </mat-card>

@@ -4,13 +4,13 @@ import { Input } from '@angular/core';
 import { WritableSignal } from '@angular/core';
 import {RouterModule} from '@angular/router';
 import { signal } from '@angular/core';
-
+import {MatIconModule} from '@angular/material/icon';
 
 @Component({
     selector: 'app-sidenav',
     templateUrl: './sidenav.component.html',
     styleUrls: ['./sidenav.component.scss'],
-    imports: [RouterModule, CommonModule]
+    imports: [RouterModule, CommonModule, MatIconModule]
 })
 export class SidenavComponent {
     @Input() isMobile!: WritableSignal<boolean>;

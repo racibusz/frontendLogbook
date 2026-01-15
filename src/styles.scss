@@ -32,6 +32,12 @@ html, body {
 body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+.no-subscript {
+  .mat-mdc-form-field-subscript-wrapper,
+  .mat-mdc-form-field-bottom-align {
+    display: none;
+  }
+}
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

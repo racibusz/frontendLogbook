@@ -1,144 +1,67 @@
-@if(flight()!=null){
-<div class="flightDetails">
-    <mat-card>
-        <!-- <mat-card-header>
-            <mat-card-title>
-                <mat-icon>airplanemode_active</mat-icon>
-            </mat-card-title>
-        </mat-card-header> -->
-        <mat-card-content>
-            <table>
-                <tr>
-                    <th><mat-icon>airplanemode_active</mat-icon></th>
-                    <td>{{flight()!.aircraft.registration}} ({{flight()!.aircraft.aircraftType.type}})</td>
-                </tr>
-                <tr>
-                    <th></th>
-                    <td>{{flight()!.aircraft.aircraftType.model}}</td>
-                </tr>
-                <tr>
-                    <th></th>
-                    <td>{{flight()!.aircraft.aircraftType.category}}</td>
-                </tr>
-            </table>
-        </mat-card-content>
-    </mat-card>
-    <mat-card>
-        <!-- <mat-card-header>
-            <mat-card-title>
-                <mat-icon>timer</mat-icon>
-            </mat-card-title>
-        </mat-card-header> -->
-        <mat-card-content>
-            <table>
-                <tr>
-                    <th></th>
-                    <th>
-                        <mat-icon>map</mat-icon>
-                    </th>
-                    <th>
-                        <mat-icon>timer</mat-icon>
-                    </th>
-                </tr>
-                <tr>
-                    <th>
-                        <mat-icon>flight_takeoff</mat-icon>
-                    </th>
-                    <td>
-                        {{flight()!.departureAerodrome}}
-                    </td>
-                    <td>
-                        {{flight()!.departureTime.toString().slice(0, -3)}}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        <mat-icon>flight_land</mat-icon>
-                    </th>
-                    <td>
-                        {{flight()!.arrivalAerodrome}}
-                    </td>
-                    <td>
-                        {{flight()!.arrivalTime.toString().slice(0, -3)}}
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="9">
-                        <hr>
-                    </td>
-                </tr>
-                <tr>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                </tr>
-                <tr>
-                    <th></th>
-                    <th></th>
-                    <td>{{flight()!.totalTime}}</td>
-                </tr>
-            </table>
-        </mat-card-content>
-    </mat-card>
-    <mat-card>
-        <!-- <mat-card-header>
-            <mat-card-title>
-                <mat-icon>timer</mat-icon>
-            </mat-card-title>
-        </mat-card-header> -->
-        <mat-card-content>
-            <table>
-                <tr>
-                    <th></th>
-                    <th>
-                        <mat-icon>map</mat-icon>
-                    </th>
-                    <th>
-                        <mat-icon>timer</mat-icon>
-                    </th>
-                </tr>
-                <tr>
-                    <th>
-                        <mat-icon>flight_takeoff</mat-icon>
-                    </th>
-                    <td>
-                        {{flight()!.departureAerodrome}}
-                    </td>
-                    <td>
-                        {{flight()!.departureTime.toString().slice(0, -3)}}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        <mat-icon>flight_land</mat-icon>
-                    </th>
-                    <td>
-                        {{flight()!.arrivalAerodrome}}
-                    </td>
-                    <td>
-                        {{flight()!.arrivalTime.toString().slice(0, -3)}}
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="9">
-                        <hr>
-                    </td>
-                </tr>
-                <tr>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                </tr>
-                <tr>
-                    <th></th>
-                    <th></th>
-                    <td>{{flight()!.totalTime}}</td>
-                </tr>
-            </table>
-        </mat-card-content>
-    </mat-card>
-    
-    
+    @if(flight()!=null && !shimmer()){
+    <div class="flightDetails">
+        <mat-card>
+            <mat-card-content>
+                <div>
+                    <mat-button-toggle [checked]="changes() !== null" (click)="switchEditing()" matIconButton  aria-label="">
+                        <mat-icon>edit</mat-icon>
+                        Tryb edycji
+                    </mat-button-toggle>
+                    <mat-button-toggle [disabled]="changes()==null" [checked]="false" (click)="saveChanges()" matIconButton  aria-label="">
+                        <mat-icon>save</mat-icon>
+                        Zapisz
+                    </mat-button-toggle>
+                    <mat-button-toggle [disabled]="changes()!==null" [checked]="false" (click)="deleteFlight()" matIconButton  aria-label="">
+                        <mat-icon>delete</mat-icon>
+                        Usuń
+                    </mat-button-toggle>
+                </div>
+            </mat-card-content>
+        </mat-card>
+        @for(section of sections?.sections; track section.title){
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>
+                    {{section.title}}
+                </mat-card-title>
+                @if(section.subTitle){
+                <mat-card-subtitle>
+                    {{section.subTitle}}
+                </mat-card-subtitle>
+                }
 
-</div>
-}
+                    <mat-icon>{{section.iconName}}</mat-icon>
+            </mat-card-header>
+            <mat-card-content>
+                <table>
+                @for(row of section.table; track row.th){
+                    <tr>
+                        <th>{{row.th}}</th>
+                        <td
+                            [attr.contenteditable]="row.editable && changes() ? 'true' : null"
+                            [contenteditableChanges]="changes"
+                            format="{{row.format}}"
+                            (input)="row.onInput?.($event)"
+                            contenteditableField="{{row.td}}">
+                            {{ getFieldValue(row.td) }}
+                        </td>
+                    </tr>
+                }
+                </table>
+            </mat-card-content>
+        </mat-card>
+        }
+    </div>
+    }
+
+    @if(shimmer() && flight()!=null){
+        <app-shimmering-details></app-shimmering-details>
+    }
+
+    @if(flight()==null){
+    <div class="flightDetails">
+        <div class="noFlightSelectedInfo">
+            Nie wybrano żadnego lotu
+        </div>
+    </div>
+    }

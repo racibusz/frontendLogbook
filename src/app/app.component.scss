@@ -12,3 +12,7 @@ mat-sidenav{
     background-color: var(--mat-sys-surface-container-lowest);
     color: var(--mat-sys-on-surface-container-lowest);
 }
+mat-sidenav-content{
+    border-top: 1px solid var(--mat-sys-outline-variant);
+    border-left: 1px solid var(--mat-sys-outline-variant);
+}
