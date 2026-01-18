@@ -2,6 +2,7 @@ table{
     width: 100%;
 }
 mat-card{
+    user-select: none;
     font-family: sans-serif;
     display: inline-block;
     box-shadow: none;

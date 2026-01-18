@@ -6,10 +6,11 @@ import { platformBrowser, provideClientHydration } from '@angular/platform-brows
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { jwtInterceptor } from './services/auth.interceptor'
 import { TokenService } from './services/token.service';
+import { ErrorInterceptor } from './services/error.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideClientHydration(),
-    provideHttpClient(withInterceptors([jwtInterceptor])),
+    provideHttpClient(withInterceptors([jwtInterceptor, ErrorInterceptor])),
     TokenService
   ],
 };

@@ -46,7 +46,7 @@ export class LoginPageComponent {
     onSubmit() {
         if(this.form.valid) {
             this.processing.set(true);
-            this.apiService.postData('auth/login', this.form.value).subscribe({
+            this.apiService.postData<{accessToken: string}>('auth/login', this.form.value).subscribe({
                 next: (response) => {
                     this.processing.set(false);
                     this.tokenService.setToken(response.accessToken);

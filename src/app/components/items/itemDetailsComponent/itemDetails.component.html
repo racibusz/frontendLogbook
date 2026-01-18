@@ -1,6 +1,5 @@
-@if(item() != null){
+@if(item() != null && shimmer() == false){
 <div class="itemDetails">
-
     <mat-card>
         <mat-card-content>
             <div>
@@ -8,11 +7,11 @@
                     <mat-icon>edit</mat-icon>
                     Tryb edycji
                 </mat-button-toggle>
-                <mat-button-toggle [disabled]="changes()==null" [checked]="false" (click)="saveChanges()" matIconButton  aria-label="">
+                <mat-button-toggle [disabled]="changes()==null" [checked]="false" (click)="saveChanges(item(), changes())" matIconButton  aria-label="">
                     <mat-icon>save</mat-icon>
                     Zapisz
                 </mat-button-toggle>
-                <mat-button-toggle [disabled]="changes()!==null" [checked]="false" (click)="delete()" matIconButton  aria-label="">
+                <mat-button-toggle [disabled]="changes()!==null" [checked]="false" (click)="delete(item())" matIconButton  aria-label="">
                     <mat-icon>delete</mat-icon>
                     Usuń
                 </mat-button-toggle>
@@ -31,8 +30,7 @@
                     {{section.subTitle}}
                 </mat-card-subtitle>
                 }
-
-                    <mat-icon>{{section.iconName}}</mat-icon>
+                <mat-icon>{{section.iconName}}</mat-icon>
             </mat-card-header>
             <mat-card-content>
                 <table>
@@ -59,7 +57,7 @@
 
 </div>
 }
-@if(item()==null){
+@if(item()==null && shimmer()==false){
     <div class="itemDetails">
         <div class="noItemSelectedInfo">
             Nie wybrano żadnego elementu

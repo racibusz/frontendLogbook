@@ -17,7 +17,7 @@ import {DetailsSections, ListSections} from './sections';
 })
 export class AircraftPageComponent implements OnInit {
     apiService: ApiService;
-    aircraft:WritableSignal<AirplaneDTO[]|null> = signal(null);
+    aircraft:WritableSignal<AirplaneDTO[] | null> = signal(null);
     selectedAircraft:WritableSignal<AirplaneDTO|null> = signal(null);
     mobileDetector = inject(MobileDetector)
     isMobile = this.mobileDetector.isMobile;

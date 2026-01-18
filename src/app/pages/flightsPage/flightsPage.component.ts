@@ -7,8 +7,9 @@ import { MatIconModule } from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {ItemListComponent} from "../../components/items/itemListComponent/itemList.component";
 import { ItemListDTO } from '../../DTOs/itemListDTO';
-import {ItemDetailsComponent} from '../../components/items/itemDetailsComponent/itemDetails.component'
+import {ItemDetailsComponent} from '../../components/items/itemDetailsComponent/itemDetails.component';
 import { DetailsDTO } from '../../DTOs/detailsDTO';
+import {FlightsResponseDTO} from '../../DTOs/flightsResponseDTO';
 
 @Component({
     selector: 'app-flights-page',
@@ -198,6 +199,13 @@ export class FlightsPageComponent {
         ]
     }
 
+    saveFlight = (originalItem: Object|null, changes: Object | null) => {
+      alert("Modify flight:");
+    }
+    deleteFlight = (flight: Object|null) => {
+      alert("Delete flight:");
+    }
+
     constructor(apiService: ApiService) { 
         this.apiService = apiService;
         effect(()=>{
@@ -212,14 +220,13 @@ export class FlightsPageComponent {
         // this.getFlights();
     }
     getFlights(){
-        this.apiService.getData("flights").subscribe({
-            next: (data) => {
-                this.flights.set(data.flights);
-            },
-            error: (err) => {
-                console.log(err);
-            }
-        })
+      this.apiService.getData<FlightsResponseDTO>('flights').subscribe({
+          next: (data) => {
+            this.flights.set(data.flights);
+          },
+          error: (error) => {
+            console.error(error);
+          }
+      });
     }
-
 }
