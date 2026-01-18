@@ -8,10 +8,11 @@
 <div class="aircraft-page">
     <mat-drawer-container>
         <mat-drawer mode="side" opened="{{!isMobile() || drawerOpened() || !selectedAircraft()}}">
-            <app-aircraft-list [aircraft]="aircraft" [selectedAircraft]="selectedAircraft"></app-aircraft-list>
+            <app-item-list [items]="aircraft" [selectedItem]="selectedAircraft" [sections]="listSections"></app-item-list>
         </mat-drawer>
         <mat-drawer-content>
-            <app-aircraft-details [aircraft]="selectedAircraft"></app-aircraft-details>
+            <!-- <app-aircraft-details [aircraft]="selectedAircraft"></app-aircraft-details> -->
+            <app-item-details [item]="selectedAircraft" [sections]="detailsSections"></app-item-details>
         </mat-drawer-content>
     </mat-drawer-container>
 

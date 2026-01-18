@@ -5,8 +5,6 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MobileDetector} from "../../services/mobileDetector";
 import { MatIconModule } from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
-import {FlightListComponent} from '../../components/flights/flightList/flightList.component';
-import { FlightDetailsComponent } from '../../components/flights/flightDetails/flightDetails.component';
 import {ItemListComponent} from "../../components/items/itemListComponent/itemList.component";
 import { ItemListDTO } from '../../DTOs/itemListDTO';
 import {ItemDetailsComponent} from '../../components/items/itemDetailsComponent/itemDetails.component'
@@ -16,7 +14,7 @@ import { DetailsDTO } from '../../DTOs/detailsDTO';
     selector: 'app-flights-page',
     templateUrl: './flightsPage.component.html',
     styleUrls: ['./flightsPage.component.scss'],
-    imports: [ItemListComponent, ItemDetailsComponent, FlightDetailsComponent, MatSidenavModule, MatIconModule, MatButtonModule],
+    imports: [ItemListComponent, ItemDetailsComponent, MatSidenavModule, MatIconModule, MatButtonModule],
 })
 export class FlightsPageComponent {
     apiService: ApiService;
