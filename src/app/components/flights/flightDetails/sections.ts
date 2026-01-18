@@ -6,7 +6,7 @@ export class Sections implements DetailsDTO {
       title: "Samolot",
       iconName: "airplanemode_active",
       table: [
-        { th: "Rejestracja", td: "aircraft.registration", editable: true, format: null },
+        { th: "Rejestracja", td: "aircraft.registration", editable: true, format: "UPPERCASE" },
         { th: "Typ ICAO", td: "aircraft.aircraftType.type", editable: false, format: null},
         { th: "Model", td: "aircraft.aircraftType.model", editable: false, format: null },
         { th: "Kategoria", td: "aircraft.aircraftType.category", editable: false, format: null }

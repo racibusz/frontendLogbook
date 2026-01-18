@@ -29,6 +29,7 @@ export class AircraftDetailsComponent{
     @Input() aircraft!: WritableSignal<AirplaneDTO | null>;
     changes = signal<AirplaneDTO | null>(null);
     shimmer = signal<boolean>(true);
+    suggestions: Record<string, string[]> = {};
     private _snackBar = inject(MatSnackBar);
     private _apiService = inject(ApiService);
     sections: Sections = new Sections();
@@ -51,6 +52,12 @@ export class AircraftDetailsComponent{
             this.resetDOM()
             this.changes.set(null);
         });
+        effect(() => {
+            const type = this.changes()?.aircraftType?.type;
+            
+            // this.updateSuggestions("aircraftType.type", )
+        });
+
     }
 
     switchEditing(){
@@ -71,13 +78,27 @@ export class AircraftDetailsComponent{
     }
 
     saveChanges(){
-        
+        if(this.changes() == null)
+            return
+        this._apiService.postData('airplanes/modify', this.changes()).subscribe({
+            next:(res)=>{
+                console.log(res);
+            },
+            error:(err)=>{
+                console.log(err);
+            }
+        })
     }
 
     resetDOM(){
         this.shimmer.set(true);
         setTimeout(()=>{this.shimmer.set(false)}, 350);
     }
+
+    updateSuggestions(field: string, list: string[]) {
+        this.suggestions[field] = list;
+    }
+
 }   
 
 @Component({

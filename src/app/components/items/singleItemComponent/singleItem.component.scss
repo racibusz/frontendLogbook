@@ -1,0 +1,36 @@
+table{
+    width: 100%;
+}
+mat-card{
+    font-family: sans-serif;
+    display: inline-block;
+    box-shadow: none;
+    outline: none;
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--mat-sys-background);
+    width: 100%;
+    mat-card-content{
+        table{
+            border-collapse: collapse;
+            text-align: justify;
+            td, th{
+                padding: 0 0.5rem;
+                div{
+                    display: flex;
+                    justify-content: space-between;
+                    vertical-align: middle;
+                    line-height: 1.5rem;
+                }
+                mat-icon{
+                    vertical-align: middle;
+                }
+            }
+        }
+    }
+}
+mat-card.active{
+    background-color: var(--mat-sys-surface-container);
+    font-weight: bold;
+}

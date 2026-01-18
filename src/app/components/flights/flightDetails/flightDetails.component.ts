@@ -101,7 +101,7 @@ export class FlightDetailsComponent{
         console.log(modifyFlightDTO);
         this._apiService.postData('flights/modify', {flightDTO: modifyFlightDTO, flightId: this.flight()!.id}).subscribe({
             next: (res)=>{
-                console.log(res)
+                this.flight.set(null);
             },
             error: (err)=>{
                 console.log(err);

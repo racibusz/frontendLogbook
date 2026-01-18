@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import { AirplaneDTO } from '../../DTOs/airplaneDTO';
 import {AircraftDetailsComponent} from '../../components/aircraft/aircraftDetails/aircraftDetails.component';
+import { FlightDTO } from '../../DTOs/flightDTO';
 
 @Component({
     selector: 'app-aircraft-page',
@@ -37,7 +38,7 @@ export class AircraftPageComponent implements OnInit {
     getAircraft(){
         this.apiService.getData("airplanes").subscribe({
             next: (data) => {
-                this.aircraft.set(data);
+                this.aircraft.set(data as AirplaneDTO[]);
             },
             error: (err) => {
                 console.log(err);

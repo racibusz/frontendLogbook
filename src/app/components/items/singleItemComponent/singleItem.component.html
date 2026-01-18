@@ -1,0 +1,39 @@
+<mat-card (click)="clicked()" [class.active]="isActive()">
+    <mat-card-content>
+        <table>
+            @for(row of sections.rows; track $index){
+                <tr>
+                    @for(col of row.cols; track $index){
+                        @if(col.isHeader){
+                        <th>
+                            <div>
+                            @if(col.icon){
+                                <mat-icon>{{col.icon}}</mat-icon>
+                            }
+                            @if(col.text){
+                                <div>
+                                    {{ getFieldValue(col.text, item) }}
+                                </div>
+                            }
+                            </div>
+                        </th>
+                    }@else{
+                        <td>
+                            <div>
+                            @if(col.icon){
+                                <mat-icon>{{col.icon}}</mat-icon>
+                            }
+                            @if(col.text){
+                                <div>
+                                    {{ getFieldValue(col.text, item) }}
+                                </div>
+                            }
+                            </div>
+                        </td>
+                    }
+                }
+                </tr>
+            }
+        </table>
+    </mat-card-content>
+</mat-card>

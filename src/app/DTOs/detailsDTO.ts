@@ -8,6 +8,7 @@ export interface DetailsDTO {
             td: string;
             format: string | null;
             editable: boolean;
+            autocomplete?: boolean;
             onInput?: (event: Event) => void;
         }[];
     }[];

@@ -1,0 +1,68 @@
+@if(item() != null){
+<div class="itemDetails">
+
+    <mat-card>
+        <mat-card-content>
+            <div>
+                <mat-button-toggle [checked]="changes() !== null" (click)="switchEditing()" matIconButton  aria-label="">
+                    <mat-icon>edit</mat-icon>
+                    Tryb edycji
+                </mat-button-toggle>
+                <mat-button-toggle [disabled]="changes()==null" [checked]="false" (click)="saveChanges()" matIconButton  aria-label="">
+                    <mat-icon>save</mat-icon>
+                    Zapisz
+                </mat-button-toggle>
+                <mat-button-toggle [disabled]="changes()!==null" [checked]="false" (click)="delete()" matIconButton  aria-label="">
+                    <mat-icon>delete</mat-icon>
+                    Usuń
+                </mat-button-toggle>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    @for(section of sections?.sections; track section.title){
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>
+                    {{section.title}}
+                </mat-card-title>
+                @if(section.subTitle){
+                <mat-card-subtitle>
+                    {{section.subTitle}}
+                </mat-card-subtitle>
+                }
+
+                    <mat-icon>{{section.iconName}}</mat-icon>
+            </mat-card-header>
+            <mat-card-content>
+                <table>
+                @for(row of section.table; track row.th){
+                    <tr>
+                        <th>{{row.th}}</th>
+                        <td
+                            [attr.contenteditable]="row.editable && changes() ? 'true' : null"
+                            [contenteditableChanges]="changes"
+                            format="{{row.format}}"
+                            (input)="row.onInput?.($event)"
+                            contenteditableField="{{row.td}}">
+                            {{ getFieldValue(row.td, item()) }}
+                        </td>
+                    </tr>
+                }
+                </table>
+            </mat-card-content>
+        </mat-card>
+    }
+
+
+    
+
+</div>
+}
+@if(item()==null){
+    <div class="itemDetails">
+        <div class="noItemSelectedInfo">
+            Nie wybrano żadnego elementu
+        </div>
+    </div>
+}

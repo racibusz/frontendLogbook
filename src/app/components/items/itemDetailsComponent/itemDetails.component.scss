@@ -1,4 +1,4 @@
-.aircraftDetails{
+.itemDetails{
     background-color: var(--mat-sys-surface-container-lowest);
     width: calc(100% - 2rem);
     height: calc(100% - 2rem);
@@ -26,7 +26,6 @@
                     height: 3.5rem;
                 }
                 td[contenteditable=true]{
-                    position: relative;
                     background-color: var(--mat-sys-surface-container-low);
                 }
                 tr:hover{
@@ -39,21 +38,7 @@
         }
     }
 }
-.autocomplete{
-    background-color: var(--mat-sys-surface-container);
-    position: absolute;
-    width: 100%;
-    top: 100%;
-    left: 0;
-    .item{
-        padding: 15px;
-        cursor: pointer;
-    }
-    .item:hover{
-        background-color: var(--mat-sys-surface-container-low);
-    }
-}
-.aircraftDetails:has(div.noAircraftSelectedInfo){
+.itemDetails:has(div.noItemSelectedInfo){
     text-align: center;
     display: flex;
     flex-direction: column;

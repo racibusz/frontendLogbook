@@ -1,8 +1,10 @@
 @if(aircraft()!=null && !shimmer()){
+    {{changes()?.aircraftType?.type}}
 <div class="aircraftDetails">
     <mat-card>
         <mat-card-content>
             <div>
+                @if(aircraft()?.canEdit == true){
                 <mat-button-toggle [checked]="changes() !== null" (click)="switchEditing()" matIconButton  aria-label="">
                     <mat-icon>edit</mat-icon>
                     Tryb edycji
@@ -11,6 +13,10 @@
                     <mat-icon>save</mat-icon>
                     Zapisz
                 </mat-button-toggle>
+                }
+                @if(aircraft()?.canEdit != true){
+                    <p>Edytować dane samolotu może tylko właściciel. Jeżeli jesteś właścicielem, prosimy o kontakt</p>
+                }
             </div>
         </mat-card-content>
     </mat-card>
@@ -40,6 +46,12 @@
                         (input)="row.onInput?.($event)"
                         contenteditableField="{{row.td}}">
                         {{ getFieldValue(row.td) }}
+                        <div class="autocomplete" *ngIf="row.autocomplete && suggestions[row.td]?.length && changes()">
+                            <div class="item"
+                                *ngFor="let s of suggestions[row.td]">
+                                {{ s }}
+                            </div>
+                        </div>
                     </td>
                 </tr>
             }

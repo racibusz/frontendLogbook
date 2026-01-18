@@ -1,0 +1,9 @@
+<div class="item-list">
+    @for (item of items(); track $index){
+        <app-single-item [item]="item" [selectedItem]="selectedItem" [sections]="sections"></app-single-item>
+    }
+    @empty{
+        Nie ma itemów
+        <!-- <app-shimmering-list></app-shimmering-list> -->
+    }
+</div>
