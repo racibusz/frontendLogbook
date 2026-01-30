@@ -1,7 +1,9 @@
+import { AirportDTO } from "./airportDTO";
+
 export interface CreateFlightDTO{
-    departureAerodrome: string,
+    departureAerodrome: AirportDTO,
     departureTime: string,
-    arrivalAerodrome: string,
+    arrivalAerodrome: AirportDTO,
     arrivalTime: string,
     flightDate: Date,
     aircraftRegistration: string,

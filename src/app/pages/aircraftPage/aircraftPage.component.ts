@@ -8,6 +8,7 @@ import { AirplaneDTO } from '../../DTOs/airplaneDTO';
 import {ItemListComponent} from "../../components/items/itemListComponent/itemList.component";
 import {ItemDetailsComponent} from "../../components/items/itemDetailsComponent/itemDetails.component";
 import {DetailsSections, ListSections} from './sections';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-aircraft-page',
@@ -23,10 +24,14 @@ export class AircraftPageComponent implements OnInit {
     isMobile = this.mobileDetector.isMobile;
     drawerOpened = signal(false);
 
+
     listSections = new ListSections();;
     detailsSections = new DetailsSections();
 
-    constructor(apiService: ApiService) { 
+    aircraftRegistration: string = undefined!;
+
+
+    constructor(apiService: ApiService, private route: ActivatedRoute) { 
         this.apiService = apiService;
         effect(()=>{
             this.selectedAircraft()
@@ -35,9 +40,15 @@ export class AircraftPageComponent implements OnInit {
                 this.getAircraft();
             }
         })
+        effect(()=>{
+            if(this.aircraftRegistration != undefined && this.aircraft() != null){
+                this.selectedAircraft.set(this.aircraft()!.find(a=>a.registration == this.aircraftRegistration) || null);
+            }
+        })
     }
     ngOnInit(): void {
         // this.getFlights();
+        this.aircraftRegistration = this.route.snapshot.paramMap.get('registration')!;
     }
     getAircraft(){
         this.apiService.getData("airplanes").subscribe({

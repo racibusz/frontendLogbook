@@ -9,8 +9,33 @@
     background-color: var(--mat-sys-background);
 }
 mat-drawer-container{
+    background-color: var(--mat-sys-surface-container-lowest);
     width: 100%;
 }
 mat-drawer{
+    // width: 15rem;
     border-radius: 0;
+}
+header, .description{
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+
+    .airports, .info{
+        display: flex;
+        text-align: center;
+        vertical-align: middle;
+        user-select: none;
+        .divider{
+            min-width: 3rem;
+        }
+        .airport-code,.divider, .flightId{
+            display: block;
+            font: var(--mat-sys-headline-large)
+        }
+        .airport-name, .flightDate{
+            color: var(--mat-sys-on-secondary-container);
+            font: var(--mat-sys-body-medium)
+        }
+    }
 }

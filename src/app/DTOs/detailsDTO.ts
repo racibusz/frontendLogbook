@@ -4,11 +4,13 @@ export interface DetailsDTO {
         subTitle?: string;
         iconName: string;
         table: {
-            th: string;
             td: string;
+            th: string;
+            iconName?:string;
             format: string | null;
             editable: boolean;
             autocomplete?: boolean;
+            linkTo?: string;
             onInput?: (event: Event) => void;
         }[];
     }[];

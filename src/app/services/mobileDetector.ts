@@ -12,6 +12,6 @@ export class MobileDetector {
     }
   }
   private checkIfMobile() {
-    this.isMobile.set(window.innerWidth < 768);
+    this.isMobile.set(window.innerWidth < 1024);
   }
 }

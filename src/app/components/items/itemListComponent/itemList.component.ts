@@ -1,5 +1,5 @@
-import { Component, Input, WritableSignal } from '@angular/core';
-import {CommonModule} from '@angular/common';
+import { Component, Input, WritableSignal, effect } from '@angular/core';
+import {CommonModule } from '@angular/common';
 import { ItemListDTO } from '../../../DTOs/itemListDTO';
 import {SingleItemComponent} from '../singleItemComponent/singleItem.component';
 
@@ -13,5 +13,4 @@ export class ItemListComponent {
     @Input() items!: WritableSignal<Object[] | null>;
     @Input() selectedItem!: WritableSignal<Object|null>;
     @Input() sections!: ItemListDTO;
-    
 }

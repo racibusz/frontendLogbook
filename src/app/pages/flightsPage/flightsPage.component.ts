@@ -10,12 +10,14 @@ import { ItemListDTO } from '../../DTOs/itemListDTO';
 import {ItemDetailsComponent} from '../../components/items/itemDetailsComponent/itemDetails.component';
 import { DetailsDTO } from '../../DTOs/detailsDTO';
 import {FlightsResponseDTO} from '../../DTOs/flightsResponseDTO';
+import {ModifyFlightDTO} from '../../DTOs/modifyFlightDTO';
+import { MapComponent } from '../../components/map/map.component';
 
 @Component({
     selector: 'app-flights-page',
     templateUrl: './flightsPage.component.html',
     styleUrls: ['./flightsPage.component.scss'],
-    imports: [ItemListComponent, ItemDetailsComponent, MatSidenavModule, MatIconModule, MatButtonModule],
+    imports: [ItemListComponent, ItemDetailsComponent, MatSidenavModule, MatIconModule, MatButtonModule, MapComponent],
 })
 export class FlightsPageComponent {
     apiService: ApiService;
@@ -28,85 +30,90 @@ export class FlightsPageComponent {
     detailsSections: DetailsDTO = {
         sections: [
     {
-      title: "Samolot",
+      title: "Aircraft",
       iconName: "airplanemode_active",
       table: [
-        { th: "Rejestracja", td: "{{aircraft.registration}}", editable: true, format: "UPPERCASE" },
-        { th: "Typ ICAO", td: "{{aircraft.aircraftType.type}}", editable: false, format: null},
-        { th: "Model", td: "{{aircraft.aircraftType.model}}", editable: false, format: null },
-        { th: "Kategoria", td: "{{aircraft.aircraftType.category}}", editable: false, format: null }
+        { th: "Aircraft", iconName:"airplanemode_active", td: "{{aircraft.registration}}", editable: true, format: "UPPERCASE", linkTo: '/aircraft/{{aircraft.registration}}' },
+        // { th: "Typ ICAO", td: "{{aircraft.aircraftType.type}}", editable: false, format: null},
+        // { th: "Model", td: "{{aircraft.aircraftType.model}}", editable: false, format: null },
+        // { th: "Kategoria", td: "{{aircraft.aircraftType.category}}", editable: false, format: null }
       ]
     },
     {
-      title: "Data, Czas",
+      title: "Date, time",
       iconName: "access_time",
       table: [
         {
-          th: "Data",
+          th: "Date",
+          iconName: "calendar_today",
           td: "{{flightDate}}", 
           format: "^(\\d{0,4}|\\d{4}-\\d{0,2}|\\d{4}-\\d{2}-\\d{0,2})$",
           editable: true
         },
         {
-          th: "Start",
+          th: "Take-off",
+          iconName: "flight_takeoff",
           td: "{{departureTime}}",
           format: "^([0-9]{0,2}|[0-9]{2}:{1}[0-9]{0,2})$",
           editable: true
         },
         {
-          th: "Lądowanie",
+          th: "Landing",
+          iconName: "flight_landing",
           td: "{{arrivalTime}}",
           format: "^([0-9]{0,2}|[0-9]{2}:{1}[0-9]{0,2})$",
           editable: true
         },
         {
           th: "Czas lotu",
+          iconName: "timelapse",
           td: "{{totalTime}}",
           format: "^([0-9]{0,2}|[0-9]{2}:{1}[0-9]{0,2})$",
           editable: true
         }
       ]
     },
+    // {
+    //   title: "Trasa",
+    //   iconName: "map",
+    //   table: [
+    //     { th: "Start", td: "{{departureAerodrome}}", editable: true, format: null },
+    //     { th: "Lądowanie", td: "{{arrivalAerodrome}}", editable: true, format: null },
+    //     // { th: "Model", td: "aircraft.aircraftType.model", editable: false, format: null },
+    //     // { th: "Kategoria", td: "aircraft.aircraftType.category", editable: false, format: null }
+    //   ]  
+    // },
     {
-      title: "Trasa",
-      iconName: "map",
-      table: [
-        { th: "Start", td: "{{departureAerodrome}}", editable: true, format: null },
-        { th: "Lądowanie", td: "{{arrivalAerodrome}}", editable: true, format: null },
-        // { th: "Model", td: "aircraft.aircraftType.model", editable: false, format: null },
-        // { th: "Kategoria", td: "aircraft.aircraftType.category", editable: false, format: null }
-      ]  
-    },
-    {
-      title: "Lądowania",
+      title: "Landings",
       iconName: "flight_landing",
       table: [
-        { th: "Dzienne", td: "{{landingsDay}}", editable: true, format: null },
-        { th: "Nocne", td: "{{landingsNight}}", editable: true, format: null },
+        { th: "Day", td: "{{landingsDay}}", iconName:"wb_sunny", editable: true, format: null },
+        { th: "Night", td: "{{landingsNight}}", iconName: "brightness_3", editable: true, format: null },
         // { th: "Model", td: "aircraft.aircraftType.model", editable: false, format: null },
         // { th: "Kategoria", td: "aircraft.aircraftType.category", editable: false, format: null }
       ]  
     },
+    // {
+    //   title: "People",
+    //   iconName: "people",
+
+    //   table: [
+    //     // { th: "Model", td: "aircraft.aircraftType.model", editable: false, format: null },
+    //     // { th: "Kategoria", td: "aircraft.aircraftType.category", editable: false, format: null }
+    //   ]  
+    // },
     {
-      title: "PIC",
-      iconName: "perm_identity",
-      table: [
-        { th: "PIC", td: "{{picName}}", editable: true, format: null },
-        // { th: "Model", td: "aircraft.aircraftType.model", editable: false, format: null },
-        // { th: "Kategoria", td: "aircraft.aircraftType.category", editable: false, format: null }
-      ]  
-    },
-    {
-      title: "Notatki",
+      title: "Additional Info",
       iconName: "notes",
       table: [
+        { th: "PIC", td: "{{picName}}", iconName: "perm_identity",editable: true, format: null },
         { th: "REMARKS", td: "{{remarks}}", editable: true, format: null },
         // { th: "Model", td: "aircraft.aircraftType.model", editable: false, format: null },
         // { th: "Kategoria", td: "aircraft.aircraftType.category", editable: false, format: null }
       ]  
     },
     {
-      title: "Podział czasu",
+      title: "Statistics",
       iconName: "timeline",
       table: [
         {
@@ -168,12 +175,12 @@ export class FlightsPageComponent {
                     {
                         isHeader: false,
                         icon: "flight_takeoff",
-                        text: "{{departureAerodrome}}",
+                        text: "{{departureAerodrome.icaoCode}}",
                     },
                     {
                         isHeader: false,
                         icon: "flight_landing",
-                        text: "{{arrivalAerodrome}}",
+                        text: "{{arrivalAerodrome.icaoCode}}",
                     }
                 ]
             },
@@ -200,10 +207,28 @@ export class FlightsPageComponent {
     }
 
     saveFlight = (originalItem: Object|null, changes: Object | null) => {
-      alert("Modify flight:");
+      const data: ModifyFlightDTO = {
+        flight: {...changes as FlightDTO, aircraftRegistration: (changes as any)?.aircraft?.registration, aircraftTypeId: 0, flightDate: (changes as any)?.flightDate.toString(), departureTime: (changes as any)?.departureTime.toString(), arrivalTime: (changes as any)?.arrivalTime.toString(), totalTime: (changes as any)?.totalTime},
+        flightId: (originalItem as FlightDTO).id
+      }
+      this.apiService.postData<FlightDTO>('flights/modify', data).subscribe({
+        next: (data) => {
+          this.getFlights();
+        },
+        error: (error) => {
+          console.error(error);
+        }
+      });
     }
     deleteFlight = (flight: Object|null) => {
-      alert("Delete flight:");
+      this.apiService.postData<FlightDTO>('flights/remove', {id: (flight as FlightDTO).id}).subscribe({
+        next: (data) => {
+          this.getFlights();
+          },
+        error: (error) => {
+          console.error(error);
+        }
+      });
     }
 
     constructor(apiService: ApiService) { 
@@ -211,10 +236,11 @@ export class FlightsPageComponent {
         effect(()=>{
             this.selectedFlight()
             this.drawerOpened.set(false);
+            console.log(this.selectedFlight())
             if(this.selectedFlight() == null){
                 this.getFlights();
             }
-        })
+      })
     }
     ngOnInit(): void {
         // this.getFlights();
@@ -223,10 +249,21 @@ export class FlightsPageComponent {
       this.apiService.getData<FlightsResponseDTO>('flights').subscribe({
           next: (data) => {
             this.flights.set(data.flights);
+            console.log(data)
+            const selectedFlight = this.selectedFlight()?.id;
+            this.selectedFlight.set(this.flights()?.find(flight => flight.id === selectedFlight) || null);
           },
           error: (error) => {
             console.error(error);
           }
       });
+      // this.apiService.getData<Airports>('airports').subscribe({
+      //   next: (data)=>{
+      //     console.log(data);
+      //   },
+      //   error: (err) => {
+      //     console.log(err);
+      //   }
+      // })
     }
 }

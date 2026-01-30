@@ -23,3 +23,23 @@ export function getFieldValue(template: string, item: Object | null): string {
         return strValue;
     });
 }
+export function resolvePath(path:string | undefined, item: object|null): any {
+    if(item == null){
+        return '';
+    }
+    if (!path || !item) {
+        return path ?? '';
+    }
+    return path.replace(/\{\{\s*(.*?)\s*\}\}/g, (_, fieldPath) => {
+        const value = fieldPath
+        .split('.')
+        .reduce((obj: any, key: string) => obj?.[key], item as any);
+
+        if (value == null) {
+        return '';
+        }
+
+        let strValue = String(value);
+        return strValue;
+    });
+}

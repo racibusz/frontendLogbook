@@ -19,7 +19,7 @@ constructor(private el: ElementRef<HTMLElement>) {
   onInput() {
     const obj = this.contenteditableChanges();
     if (!obj) return;
-    const keys = this.contenteditableField.split('.');
+    const keys = this.contenteditableField.replace(/[{}]/g, '').split('.');
     let ref = obj;
     for (let i = 0; i < keys.length - 1; i++) ref = ref[keys[i]];
 
@@ -49,8 +49,6 @@ constructor(private el: ElementRef<HTMLElement>) {
       this.el.nativeElement.innerText = value;
       this.setCaretToEnd();
     }
-
-
     // ref[keys[keys.len gth - 1]] = value;
     this.contenteditableChanges.set(
     this.setDeepImmutable(this.contenteditableChanges(), keys, value)

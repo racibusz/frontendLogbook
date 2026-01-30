@@ -11,6 +11,38 @@
              <app-item-list [items]="flights" [selectedItem]="selectedFlight" [sections]="listSections"></app-item-list>
         </mat-drawer>
         <mat-drawer-content>
+            @if(selectedFlight()){
+                <!-- FlightMap -->
+                 <app-map [selectedFlight]="selectedFlight"></app-map>
+                 <header>
+                    <div class="info">
+                        <div>
+                            <span class="flightId">#{{selectedFlight()?.id}}</span>
+                            <span class="flightDate">{{selectedFlight()?.flightDate}}</span>
+                        </div>
+                    </div>
+                    <div class="airports">
+                        <div>
+                            <span class="airport-code">{{ selectedFlight()?.departureAerodrome?.icaoCode ?? '' }}</span>
+                            <span class="airport-name">{{ selectedFlight()?.departureAerodrome?.name ?? '' }}</span>
+                        </div>
+                        <div>
+                            <span class="divider">-</span>
+                            <span class="airport-name">&nbsp;</span>
+                        </div>
+                        <div>
+                            <span class="airport-code">{{ selectedFlight()?.arrivalAerodrome?.icaoCode ?? '' }}</span>
+                            <span class="airport-name">{{ selectedFlight()?.arrivalAerodrome?.name ?? '' }}</span>
+                        </div>
+                    </div>
+                 </header>
+                <div class="description">
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint, reprehenderit? Eius deserunt cupiditate omnis neque?
+                    </p>
+                 </div>
+
+            }
             <app-item-details [item]="selectedFlight" [sections]="detailsSections" [delete]="deleteFlight" [saveChanges]="saveFlight"></app-item-details>
         </mat-drawer-content>
     </mat-drawer-container>

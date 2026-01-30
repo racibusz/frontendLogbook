@@ -1,10 +1,11 @@
 import { AirplaneDTO } from "./airplaneDTO";
+import {AirportDTO} from './airportDTO';
 
 export interface FlightDTO {
     id: number;
     userId: number;
-    departureAerodrome: string;
-    arrivalAerodrome: string;
+    departureAerodrome: AirportDTO;
+    arrivalAerodrome: AirportDTO;
     departureTime: Date;
     arrivalTime: Date;
     flightDate: Date;

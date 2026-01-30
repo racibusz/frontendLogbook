@@ -3,22 +3,40 @@ ul{
     padding: 0;
     margin: 0;
     li{
-        padding: 15px 10px;
-        display: flex;
-        gap: 15px;
+        // padding: 15px 10px;
+        // display: flex;
+        // gap: 15px;
+        // a{
+        //     // display: block; 
+        //     padding: 15px 10px;
+        //     display: flex;
+        //     gap: 15px;
+        // }
         mat-icon{
             vertical-align: middle;
         }
+        ul{
+            a{
+                padding-left: 10%;
+                display: flex;
+                gap: 15px;
+                text-decoration: none;
+                color: inherit;
+            }
+        }   
     }
 }
 
 a{
+    // display: block; 
+    padding: 15px 10px;
+    display: flex;
+    gap: 15px;
     text-decoration: none;
     color: inherit;
 }
 .active{
-    li{
-        background-color: var(--mat-sys-secondary-container);
-        color: var(--mat-sys-on-secondary-container);
-    }
+    font-weight: bold;
+    background-color: var(--mat-sys-surface-container);
+    color: var(--mat-sys-on-surface-container);
 }

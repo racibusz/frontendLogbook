@@ -35,6 +35,16 @@ export const routes: Routes = [
     },
     {
         canActivate: [authGuard],
+        path: 'flights/add',
+        loadComponent: () => import('./pages/addFlightPage/addFlightPage.component').then(m => m.AddFlightPageComponent)
+    },
+    {
+        canActivate: [authGuard],
+        path: 'aircraft/:registration',
+        loadComponent: () => import('./pages/aircraftPage/aircraftPage.component').then(m => m.AircraftPageComponent)
+    },
+    {
+        canActivate: [authGuard],
         path: 'aircraft',
         loadComponent: () => import('./pages/aircraftPage/aircraftPage.component').then(m => m.AircraftPageComponent)
     }
