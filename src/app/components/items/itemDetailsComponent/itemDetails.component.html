@@ -66,7 +66,7 @@
                         </div>
                         <div class="value">
                             <mat-form-field appearance="outline">
-                                <input matInput [value]="getFieldValue(row.td, item())" [disabled]="changes()==null" [pattern]="row.format">
+                                <input [type]='row.inputType ?? ""' matInput [name]="row.th" [ngModel]="getFieldValueComputed(row.td)()" (ngModelChange)="setValue(row.td, $event, row.format)" [disabled]="changes()==null">
                             </mat-form-field>
                             <!-- {{getFieldValue(row.td, item()) }} -->
                         </div>
@@ -95,7 +95,7 @@
                                 </div>
                                 <div class="value">
                                     <mat-form-field appearance="outline">
-                                        <input matInput [value]="getFieldValue(row.td, item())" [disabled]="changes()==null" [pattern]="row.format">
+                                        <input [type]='row.inputType ?? ""' matInput [name]="row.th" [ngModel]="getFieldValueComputed(row.td)()" (ngModelChange)="setValue(row.td, $event, row.format)" [disabled]="changes()==null">
                                     </mat-form-field>
                                     <!-- {{getFieldValue(row.td, item()) }} -->
                                 </div>
@@ -123,7 +123,7 @@
                                 </div>
                                 <div class="value">
                                     <mat-form-field appearance="outline">
-                                        <input matInput [value]="getFieldValue(row.td, item())" [disabled]="changes()==null" [pattern]="row.format">
+                                        <input [type]='row.inputType ?? ""' matInput [name]="row.th" [ngModel]="getFieldValueComputed(row.td)()" (ngModelChange)="setValue(row.td, $event, row.format)" [disabled]="changes()==null">
                                     </mat-form-field>
                                     <!-- {{getFieldValue(row.td, item()) }} -->
                                 </div>

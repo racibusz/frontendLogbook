@@ -23,6 +23,9 @@ export function getFieldValue(template: string, item: Object | null): string {
         return strValue;
     });
 }
+
+
+
 export function resolvePath(path:string | undefined, item: object|null): any {
     if(item == null){
         return '';
@@ -31,15 +34,20 @@ export function resolvePath(path:string | undefined, item: object|null): any {
         return path ?? '';
     }
     return path.replace(/\{\{\s*(.*?)\s*\}\}/g, (_, fieldPath) => {
-        const value = fieldPath
+        let value = fieldPath
         .split('.')
         .reduce((obj: any, key: string) => obj?.[key], item as any);
 
         if (value == null) {
         return '';
         }
+        
 
         let strValue = String(value);
+        if(strValue.split(":").length==3){
+            strValue = strValue.slice(0, -3);
+        }
+
         return strValue;
     });
 }

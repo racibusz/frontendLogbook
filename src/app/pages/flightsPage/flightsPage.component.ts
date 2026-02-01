@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal, WritableSignal, effect } from '@angular/core';
+import { Component, OnInit, inject, signal, WritableSignal, effect, Input } from '@angular/core';
 import {ApiService} from "../../services/api.service";
 import {FlightDTO} from "../../DTOs/flightDTO";
 import {MatSidenavModule} from '@angular/material/sidenav';
@@ -12,6 +12,7 @@ import { DetailsDTO } from '../../DTOs/detailsDTO';
 import {FlightsResponseDTO} from '../../DTOs/flightsResponseDTO';
 import {ModifyFlightDTO} from '../../DTOs/modifyFlightDTO';
 import { MapComponent } from '../../components/map/map.component';
+import { InputType } from '../../DTOs/inputTypes';
 
 @Component({
     selector: 'app-flights-page',
@@ -46,6 +47,7 @@ export class FlightsPageComponent {
         {
           th: "Date",
           iconName: "calendar_today",
+          inputType: InputType.date,
           td: "{{flightDate}}", 
           format: "^(\\d{0,4}|\\d{4}-\\d{0,2}|\\d{4}-\\d{2}-\\d{0,2})$",
           editable: true
@@ -53,6 +55,7 @@ export class FlightsPageComponent {
         {
           th: "Take-off",
           iconName: "flight_takeoff",
+          inputType: InputType.time,
           td: "{{departureTime}}",
           format: "^([0-9]{0,2}|[0-9]{2}:{1}[0-9]{0,2})$",
           editable: true
@@ -60,6 +63,7 @@ export class FlightsPageComponent {
         {
           th: "Landing",
           iconName: "flight_landing",
+          inputType: InputType.time,
           td: "{{arrivalTime}}",
           format: "^([0-9]{0,2}|[0-9]{2}:{1}[0-9]{0,2})$",
           editable: true
@@ -67,28 +71,29 @@ export class FlightsPageComponent {
         {
           th: "Czas lotu",
           iconName: "timelapse",
+          inputType: InputType.time,
           td: "{{totalTime}}",
           format: "^([0-9]{0,2}|[0-9]{2}:{1}[0-9]{0,2})$",
           editable: true
         }
       ]
     },
-    // {
-    //   title: "Trasa",
-    //   iconName: "map",
-    //   table: [
-    //     { th: "Start", td: "{{departureAerodrome}}", editable: true, format: null },
-    //     { th: "Lądowanie", td: "{{arrivalAerodrome}}", editable: true, format: null },
-    //     // { th: "Model", td: "aircraft.aircraftType.model", editable: false, format: null },
-    //     // { th: "Kategoria", td: "aircraft.aircraftType.category", editable: false, format: null }
-    //   ]  
-    // },
+    {
+      title: "Trasa",
+      iconName: "map",
+      table: [
+        { th: "Start", td: "{{departureAerodrome.icaoCode}}", editable: true, format: 'UPPERCASE' },
+        { th: "Lądowanie", td: "{{arrivalAerodrome.icaoCode}}", editable: true, format: 'UPPERCASE' },
+        // { th: "Model", td: "aircraft.aircraftType.model", editable: false, format: null },
+        // { th: "Kategoria", td: "aircraft.aircraftType.category", editable: false, format: null }
+      ]  
+    },
     {
       title: "Landings",
       iconName: "flight_landing",
       table: [
-        { th: "Day", td: "{{landingsDay}}", iconName:"wb_sunny", editable: true, format: null },
-        { th: "Night", td: "{{landingsNight}}", iconName: "brightness_3", editable: true, format: null },
+        { th: "Day", td: "{{landingsDay}}", iconName:"wb_sunny", editable: true, format: null, inputType: InputType.number },
+        { th: "Night", td: "{{landingsNight}}", iconName: "brightness_3", editable: true, format: null, inputType: InputType.number },
         // { th: "Model", td: "aircraft.aircraftType.model", editable: false, format: null },
         // { th: "Kategoria", td: "aircraft.aircraftType.category", editable: false, format: null }
       ]  
@@ -107,7 +112,7 @@ export class FlightsPageComponent {
       iconName: "notes",
       table: [
         { th: "PIC", td: "{{picName}}", iconName: "perm_identity",editable: true, format: null },
-        { th: "REMARKS", td: "{{remarks}}", editable: true, format: null },
+        { th: "REMARKS", td: "{{remarks}}", editable: true, format: null, inputType: InputType.textarea, },
         // { th: "Model", td: "aircraft.aircraftType.model", editable: false, format: null },
         // { th: "Kategoria", td: "aircraft.aircraftType.category", editable: false, format: null }
       ]  
@@ -119,42 +124,49 @@ export class FlightsPageComponent {
         {
           th: "PIC",
           td: "{{picTime}}", 
+          inputType: InputType.time,
           format: "^([0-9]{0,2}|[0-9]{2}:{1}[0-9]{0,2})$",
           editable: true
         },
         {
           th: "Co-pilot",
           td: "{{copilotTime}}",
+          inputType: InputType.time,
           format: "^([0-9]{0,2}|[0-9]{2}:{1}[0-9]{0,2})$",
           editable: true
         },
         {
           th: "Dual",
           td: "{{dualTime}}",
+          inputType: InputType.time,
           format: "^([0-9]{0,2}|[0-9]{2}:{1}[0-9]{0,2})$",
           editable: true
         },
         {
           th: "Instructor",
           td: "{{instructorTime}}",
+          inputType: InputType.time,
           format: "^([0-9]{0,2}|[0-9]{2}:{1}[0-9]{0,2})$",
           editable: true
         },
         {
           th: "Night",
           td: "{{flightConditionNightTime}}",
+          inputType: InputType.time,
           format: "^([0-9]{0,2}|[0-9]{2}:{1}[0-9]{0,2})$",
           editable: true
         },
         {
           th: "IFR",
           td: "{{flightConditionIfrTime}}",
+          inputType: InputType.time,
           format: "^([0-9]{0,2}|[0-9]{2}:{1}[0-9]{0,2})$",
           editable: true
         },
         {
           th: "TOTAL",
           td: "{{totalTime}}",
+          inputType: InputType.time,
           format: "^([0-9]{0,2}|[0-9]{2}:{1}[0-9]{0,2})$",
           editable: true
         }
@@ -208,9 +220,10 @@ export class FlightsPageComponent {
 
     saveFlight = (originalItem: Object|null, changes: Object | null) => {
       const data: ModifyFlightDTO = {
-        flight: {...changes as FlightDTO, aircraftRegistration: (changes as any)?.aircraft?.registration, aircraftTypeId: 0, flightDate: (changes as any)?.flightDate.toString(), departureTime: (changes as any)?.departureTime.toString(), arrivalTime: (changes as any)?.arrivalTime.toString(), totalTime: (changes as any)?.totalTime},
+        flight: {...changes as FlightDTO, aircraftRegistration: (changes as any)?.aircraft?.registration, aircraftTypeId: 0, flightDate: (changes as any)?.flightDate.toString(), departureTime: (changes as any)?.departureTime.toString(), arrivalTime: (changes as any)?.arrivalTime.toString(), totalTime: (changes as any)?.totalTime, departureAerodrome: (changes as any)?.departureAerodrome.icaoCode, arrivalAerodrome: (changes as any)?.arrivalAerodrome.icaoCode},
         flightId: (originalItem as FlightDTO).id
       }
+      console.log(data);
       this.apiService.postData<FlightDTO>('flights/modify', data).subscribe({
         next: (data) => {
           this.getFlights();
@@ -236,7 +249,6 @@ export class FlightsPageComponent {
         effect(()=>{
             this.selectedFlight()
             this.drawerOpened.set(false);
-            console.log(this.selectedFlight())
             if(this.selectedFlight() == null){
                 this.getFlights();
             }
@@ -249,7 +261,6 @@ export class FlightsPageComponent {
       this.apiService.getData<FlightsResponseDTO>('flights').subscribe({
           next: (data) => {
             this.flights.set(data.flights);
-            console.log(data)
             const selectedFlight = this.selectedFlight()?.id;
             this.selectedFlight.set(this.flights()?.find(flight => flight.id === selectedFlight) || null);
           },

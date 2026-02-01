@@ -1,3 +1,5 @@
+import { InputType } from "./inputTypes";
+
 export interface DetailsDTO {
     sections: {
         title: string;
@@ -10,6 +12,7 @@ export interface DetailsDTO {
             format: string | null;
             editable: boolean;
             autocomplete?: boolean;
+            inputType?: InputType;
             linkTo?: string;
             onInput?: (event: Event) => void;
         }[];
