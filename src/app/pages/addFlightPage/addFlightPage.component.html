@@ -1,0 +1,110 @@
+<div class="addFlightPage">
+  <h1>Create Flight</h1>
+  <p>Please fill-up data required in the form below.</p>
+
+  <form [formGroup]="flightForm" (ngSubmit)="submit()">
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Airports</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Please provide airfields of arrival and departure</p>
+        <div class="fields">
+          <mat-form-field appearance="fill">
+            <mat-label>Departure</mat-label>
+            <input matInput type="text" class="uppercase" formControlName="departureAerodrome" />
+            <mat-hint>{{departureAerodrome()?.name}}</mat-hint>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Arrival</mat-label>
+            <input matInput type="text" class="uppercase" formControlName="arrivalAerodrome" />
+            <mat-hint>{{arrivalAerodrome()?.name}}</mat-hint>
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Time</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Please provide time details</p>
+        <div class="fields">
+          <mat-form-field appearance="fill">
+            <mat-label>Departure</mat-label>
+            <input matInput type="time" class="uppercase" formControlName="departureTime" />
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Arrival</mat-label>
+            <input matInput type="time" class="uppercase" formControlName="arrivalTime" />
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Total Time</mat-label>
+            <input matInput type="time" class="uppercase" formControlName="totalTime" />
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Time details</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Modify time logging below</p>
+        <div class="fields">
+          <mat-form-field appearance="fill">
+            <mat-label>Single Pilot Single Engine</mat-label>
+            <input matInput type="time" class="uppercase" formControlName="SinglePilotSeTime" />
+            <mat-checkbox matSuffix formControlName="SinglePilotSeTimeCheckbox"></mat-checkbox>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Single Pilot Multi Engine</mat-label>
+            <input matInput type="time" class="uppercase" formControlName="SinglePilotMeTime" />
+            <mat-checkbox matSuffix formControlName="SinglePilotMeTimeCheckbox"></mat-checkbox>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Multi Pilot</mat-label>
+            <input matInput type="time" class="uppercase" formControlName="multiPilotTime" />
+            <mat-checkbox matSuffix formControlName="multiPilotTimeCheckbox"></mat-checkbox>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>PIC</mat-label>
+            <input matInput type="time" class="uppercase" formControlName="picTime" />
+            <mat-checkbox matSuffix formControlName="picTimeCheckbox"></mat-checkbox>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>TOTAL</mat-label>
+            <input matInput type="time" class="uppercase" formControlName="totalTime" />
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Aircraft</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>&nbsp;</p>
+        <div class="fields">
+          <mat-form-field appearance="fill">
+            <mat-label>Aircraft registration</mat-label>
+            <input matInput type="text" class="uppercase" formControlName="aircraftRegistration" />
+          </mat-form-field>
+          <!-- <mat-form-field appearance="fill">
+            <mat-label>Aircraft registration</mat-label>
+            <input matInput type="text" class="uppercase" formControlName="aircraftRegistration" />
+          </mat-form-field> -->
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <input type="submit">
+
+  </form>
+</div>

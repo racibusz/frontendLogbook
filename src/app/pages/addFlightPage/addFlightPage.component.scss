@@ -1,4 +1,15 @@
 .addFlightPage{
     min-height: 80vh;
     padding: 15px;
+    form{
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+}
+.fields{
+    display: grid;
+}
+input.uppercase{
+    text-transform: uppercase;
 }
