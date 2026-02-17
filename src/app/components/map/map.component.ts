@@ -1,7 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Signal } from '@angular/core';
 import * as L from 'leaflet';
 import {FlightDTO} from '../../DTOs/flightDTO';
 import { WritableSignal, effect } from '@angular/core';
+import { AirportDTO } from '../../DTOs/airportDTO';
 
 @Component({
     selector: 'app-map',
@@ -10,7 +11,8 @@ import { WritableSignal, effect } from '@angular/core';
 })
 export class MapComponent {
   private map!: L.Map;
-  @Input() selectedFlight!:WritableSignal<FlightDTO|null>
+  @Input() aerodrome1!: Signal<AirportDTO | undefined>;
+  @Input() aerodrome2!: Signal<AirportDTO | undefined>;
   private flightLine?: L.Polyline;
 
   ngAfterViewInit(): void {
@@ -18,27 +20,35 @@ export class MapComponent {
   }
   constructor() {
     effect(() => {
-      this.selectedFlight();
+      this.aerodrome1();
       if(this.flightLine){
-      this.clearLine();
-      this.drawLine();
+        this.clearLine();
+        this.drawLine();
+      }
+      else{
+        this.drawLine();
       }
     });
   }
   generateMap(){
     this.initMap();
-    this.drawLine();
+    if(this.aerodrome1() && this.aerodrome2()){
+      this.drawLine();
+    }
   }
 
   private drawLine(): void {
     this.clearLine()
+    if(this.aerodrome1() == undefined || this.aerodrome2() == undefined){
+      return;
+    }
     const pointA: [number, number] = [
-      this.selectedFlight()?.departureAerodrome.latitute ?? 0,
-      this.selectedFlight()?.departureAerodrome.longtitute ?? 0
+      this.aerodrome1()?.latitute ?? 0,
+      this.aerodrome1()?.longtitute ?? 0
     ];
     const pointB: [number, number] = [
-      this.selectedFlight()?.arrivalAerodrome.latitute ?? 0,
-      this.selectedFlight()?.arrivalAerodrome.longtitute ?? 0
+      this.aerodrome2()?.latitute ?? 0,
+      this.aerodrome2()?.longtitute ?? 0
     ];
 
 
@@ -55,7 +65,16 @@ export class MapComponent {
   private initMap(): void {
     this.map = L.map('map', {
       center: [52.2297, 21.0122], // Warszawa
-      zoom: 8
+      zoom: 8,
+      keyboard: false
+    });
+
+    setTimeout(() => {
+    const mapContainer = document.getElementById('map');
+    mapContainer?.setAttribute('tabindex', '-1');
+
+    const tabbables = mapContainer?.querySelectorAll('[tabindex]');
+    tabbables?.forEach(el => el.setAttribute('tabindex', '-1'));
     });
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

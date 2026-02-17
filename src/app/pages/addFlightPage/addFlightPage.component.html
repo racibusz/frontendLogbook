@@ -22,6 +22,10 @@
             <mat-hint>{{arrivalAerodrome()?.name}}</mat-hint>
           </mat-form-field>
         </div>
+        
+          <div style="width: 100%; height: 250px;" tabindex="-1">
+            <app-map tabindex="-1" [aerodrome1]="departureAerodrome" [aerodrome2]="arrivalAerodrome"></app-map>
+          </div>
       </mat-card-content>
     </mat-card>
 
@@ -32,6 +36,12 @@
       <mat-card-content>
         <p>Please provide time details</p>
         <div class="fields">
+          <mat-form-field appearance="fill">
+            <mat-label>Date</mat-label>
+            <input matInput [matDatepicker]="picker1" placeholder="From Date" formControlName="flightDate">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker  #picker1></mat-datepicker>
+          </mat-form-field>
           <mat-form-field appearance="fill">
             <mat-label>Departure</mat-label>
             <input matInput type="time" class="uppercase" formControlName="departureTime" />
@@ -71,7 +81,11 @@
             <input matInput type="time" class="uppercase" formControlName="multiPilotTime" />
             <mat-checkbox matSuffix formControlName="multiPilotTimeCheckbox"></mat-checkbox>
           </mat-form-field>
-
+          <mat-form-field appearance="fill">
+            <mat-label>Dual</mat-label>
+            <input matInput type="time" class="uppercase" formControlName="dualTime"/>
+            <mat-checkbox matSuffix formControlName="dualTimeCheckbox"></mat-checkbox>
+          </mat-form-field>
           <mat-form-field appearance="fill">
             <mat-label>PIC</mat-label>
             <input matInput type="time" class="uppercase" formControlName="picTime" />
@@ -94,12 +108,58 @@
         <div class="fields">
           <mat-form-field appearance="fill">
             <mat-label>Aircraft registration</mat-label>
-            <input matInput type="text" class="uppercase" formControlName="aircraftRegistration" />
+            <input matInput type="text" class="uppercase" formControlName="aircraftRegistration" [matAutocomplete]="auto"/>
+            <mat-autocomplete #auto="matAutocomplete">
+              @for (option of aircraftAutoComplete(); track option) {
+                <mat-option [value]="option.registration">
+                  {{option.registration}}
+                  {{option.aircraftType.type}}
+                </mat-option>
+              }
+            </mat-autocomplete>
           </mat-form-field>
+          @if(aircraftAutoComplete()?.length != 1){
+          <mat-form-field appearance="fill">
+            <mat-label>Aircraft type</mat-label>
+            <input matInput type="text" class="uppercase" [matAutocomplete]="auto" formControlName="aircraftTypeType"/>
+            <mat-autocomplete #auto="matAutocomplete">
+              @for (option of typeAutoComplete(); track option) {
+                <mat-option [value]="option.type + ' (#' + option.id +')'">
+                  {{option.model}}
+                  {{option.type}}
+                </mat-option>
+              }
+            </mat-autocomplete>
+          </mat-form-field>
+          }
+
           <!-- <mat-form-field appearance="fill">
-            <mat-label>Aircraft registration</mat-label>
-            <input matInput type="text" class="uppercase" formControlName="aircraftRegistration" />
+            <mat-label>Aircraft type id</mat-label>
+            <input matInput type="text" class="uppercase" formControlName="aircraftTypeId" />
           </mat-form-field> -->
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Logging details</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p></p>
+        <div class="fields">
+          <mat-form-field appearance="fill">
+            <mat-label>Landings Day</mat-label>
+            <input matInput type="number" formControlName="landingsDay" />
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Landings Night</mat-label>
+            <input matInput type="number" formControlName="landingsNight" />
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>PIC Name</mat-label>
+            <input matInput type="text" formControlName="picName" />
+          </mat-form-field>
         </div>
       </mat-card-content>
     </mat-card>

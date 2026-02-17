@@ -1,19 +1,46 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+
+import { Router } from '@angular/router';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatNativeDateModule } from '@angular/material/core';
+import { DateAdapter, MatNativeDateModule } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 import {AirportDTO} from '../../DTOs/airportDTO';
 
 import {ApiService} from '../../services/api.service';
+
+import {MapComponent} from '../../components/map/map.component';
+import { AirplaneDTO } from '../../DTOs/airplaneDTO';
+import { AirplaneTypeDTO } from '../../DTOs/airplaneTypeDTO';
+
+import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { Dialog } from '../../components/dialog/dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { RouterModule } from '@angular/router';
+
+
+export const MY_DATE_FORMATS = {
+  parse: {
+    dateInput: 'DD.MM.YYYY',
+  },
+  display: {
+    dateInput: 'DD.MM.YYYY',
+    monthYearLabel: 'MMMM YYYY',
+    dateA11yLabel: 'DD.MM.YYYY',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
+
 
 @Component({
   selector: 'app-add-flight-page',
@@ -24,21 +51,42 @@ import {ApiService} from '../../services/api.service';
     CommonModule,
     ReactiveFormsModule,
     MatFormFieldModule,
+    FormsModule,
     MatInputModule,
     MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatCardModule,
     MatCheckboxModule,
-    MatDividerModule
+    MatDividerModule,
+    MapComponent,
+    MatAutocompleteModule,
+    Dialog
+  ],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'pl-PL' },
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    },
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
   ]
+
 })
 export class AddFlightPageComponent implements OnInit {
-
   flightForm!: FormGroup;
 
-  departureAerodrome = signal<AirportDTO|null>(null);
-  arrivalAerodrome = signal<AirportDTO|null>(null);
+  readonly dialog = inject(MatDialog);
+  router = inject(Router);
+
+
+  departureAerodrome = signal<AirportDTO|undefined>(undefined);
+  arrivalAerodrome = signal<AirportDTO|undefined>(undefined);
+
+  aircraftAutoComplete = signal<AirplaneDTO[] | undefined>(undefined);
+  typeAutoComplete = signal<AirplaneTypeDTO[] | undefined>(undefined);
+  typeInputted = signal<String | undefined>(undefined);
 
   constructor(private fb: FormBuilder, private apiService:ApiService) {}
 
@@ -48,18 +96,19 @@ export class AddFlightPageComponent implements OnInit {
       departureTime: ['', Validators.required],
       arrivalAerodrome: ['', Validators.required],
       arrivalTime: ['', Validators.required],
-      flightDate: ['', Validators.required],
+      flightDate: [new Date(), Validators.required],
 
       aircraftRegistration: ['', Validators.required],
       aircraftTypeId: [null],
+      aircraftTypeType: [''],
 
       SinglePilotSeTime: [''],
       SinglePilotMeTime: [''],
       multiPilotTime: [''],
       totalTime: [''],
 
-      picName: [''],
-      landingsDay: [0],
+      picName: ['SELF'],
+      landingsDay: [1],
       landingsNight: [0],
 
       flightConditionNightTime: [''],
@@ -76,11 +125,16 @@ export class AddFlightPageComponent implements OnInit {
       SinglePilotMeTimeCheckbox: [false],
       multiPilotTimeCheckbox: [false],
       picTimeCheckbox: [true],
+      copilotTimeCheckbox: [false],
+      dualTimeCheckbox: [false],
+      instructorTimeCheckbox: [false],
     });
 
     this.setupTotalTimeCalculation();
 
     this.setupAirportNames();
+    this.setupAircraftAutocomplete();
+    this.setupTypeAutocomplete();
 
     this.bindCheckboxToTotalTime('SinglePilotSeTimeCheckbox', 'SinglePilotSeTime');
     this.bindCheckboxToTotalTime('SinglePilotMeTimeCheckbox', 'SinglePilotMeTime');
@@ -172,10 +226,10 @@ export class AddFlightPageComponent implements OnInit {
     const arrivalAerodrome = this.flightForm.get("arrivalAerodrome")!.value;
     const departureAerodrome = this.flightForm.get("departureAerodrome")!.value;
     if(arrivalAerodrome.length==0){
-      this.arrivalAerodrome.set(null);
+      this.arrivalAerodrome.set(undefined);
     }
     if(departureAerodrome.length==0){
-      this.departureAerodrome.set(null);
+      this.departureAerodrome.set(undefined);
     }
     if(arrivalAerodrome.length>=4 && arrivalAerodrome!=this.arrivalAerodrome()?.icaoCode){
       this.apiService.getData<AirportDTO>("airports/"+arrivalAerodrome).subscribe({
@@ -199,12 +253,82 @@ export class AddFlightPageComponent implements OnInit {
     }
   }
 
+  private setupAircraftAutocomplete(){
+    this.flightForm.get('aircraftRegistration')!.valueChanges
+      .subscribe(()=>{this.getAircraftAutocomplete()})
+  }
+
+  private getAircraftAutocomplete(){
+    const enteredRegistration = this.flightForm.get('aircraftRegistration')?.value
+    if(enteredRegistration == ""){
+      this.aircraftAutoComplete.set(undefined);
+      return;
+    }
+    this.apiService.getData<AirplaneDTO[]>("airplanes/"+enteredRegistration).subscribe({
+      next: (data)=>{
+        this.aircraftAutoComplete.set(data);
+      },
+      error(err) {
+        console.log(err);
+      },
+    })
+  }
+
+  private setupTypeAutocomplete(){
+    this.flightForm.get('aircraftTypeType')!.valueChanges
+      .subscribe(()=>{this.getAircraftTypeAutocomplete()})
+  }
+
+  private getAircraftTypeAutocomplete(){
+    const aircraftTypeInputted = this.flightForm.get('aircraftTypeType')?.value;
+    if(aircraftTypeInputted == '')
+      return;
+      const match = aircraftTypeInputted.match(/\(#(\d+)\)/);
+
+    if (match) {
+      this.flightForm.patchValue({
+        'aircraftTypeId': match[1],
+      });
+      return;
+    }
+    this.apiService.getData<AirplaneTypeDTO[]>('airplanes/types/'+aircraftTypeInputted).subscribe({
+      next: (data)=>{
+        this.typeAutoComplete.set(data);
+      },
+      error(err) {
+        console.log(err);
+      },
+    });
+  }
+
   submit(): void {
     if (this.flightForm.invalid) {
+          Object.keys(this.flightForm.controls).forEach(key => {
+      const control = this.flightForm.get(key);
+      if (control?.invalid) {
+        console.log(`Control "${key}" invalid:`, control.errors);
+      }
+    });
       this.flightForm.markAllAsTouched();
       return;
     }
-
-    console.log('CreateFlightDTO:', this.flightForm.getRawValue());
+    this.apiService.postData('flights', this.flightForm.getRawValue()).subscribe({
+      next: (data)=>{
+        const dialogRef = this.dialog.open(Dialog);
+        let instance = dialogRef.componentInstance;
+        instance.text = "Czy chcesz dodać kolejny lot?";
+        dialogRef.afterClosed().subscribe(result => {
+            if(result == true){
+              this.flightForm.reset();
+            }
+            else{
+              this.router.navigate(['/flights']);
+            }
+        });
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
   }
 }

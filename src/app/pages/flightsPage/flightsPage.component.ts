@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal, WritableSignal, effect, Input } from '@angular/core';
+import { Component, OnInit, inject, signal, WritableSignal, effect, Input, computed } from '@angular/core';
 import {ApiService} from "../../services/api.service";
 import {FlightDTO} from "../../DTOs/flightDTO";
 import {MatSidenavModule} from '@angular/material/sidenav';
@@ -27,6 +27,9 @@ export class FlightsPageComponent {
     mobileDetector = inject(MobileDetector)
     isMobile = this.mobileDetector.isMobile;
     drawerOpened = signal(false);
+
+    lineaerodrome1 = computed(()=>this.selectedFlight()?.departureAerodrome);
+    lineaerodrome2 = computed(()=>this.selectedFlight()?.arrivalAerodrome);
 
     detailsSections: DetailsDTO = {
         sections: [
@@ -223,7 +226,6 @@ export class FlightsPageComponent {
         flight: {...changes as FlightDTO, aircraftRegistration: (changes as any)?.aircraft?.registration, aircraftTypeId: 0, flightDate: (changes as any)?.flightDate.toString(), departureTime: (changes as any)?.departureTime.toString(), arrivalTime: (changes as any)?.arrivalTime.toString(), totalTime: (changes as any)?.totalTime, departureAerodrome: (changes as any)?.departureAerodrome.icaoCode, arrivalAerodrome: (changes as any)?.arrivalAerodrome.icaoCode},
         flightId: (originalItem as FlightDTO).id
       }
-      console.log(data);
       this.apiService.postData<FlightDTO>('flights/modify', data).subscribe({
         next: (data) => {
           this.getFlights();
