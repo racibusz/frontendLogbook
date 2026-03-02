@@ -1,7 +1,7 @@
 export interface AirportDTO{
     name: string;
-    latitute: number;
-    longtitute: number;
+    latitude: number;
+    longitude: number;
     icaoCode: string;
     elevation: number;
 }

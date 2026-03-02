@@ -29,6 +29,7 @@
 
     .processing{
         background-color: var(--mat-sys-background);
+        z-index: 999;
         flex-direction: column;
         justify-content: center;
         display: flex;

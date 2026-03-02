@@ -9,6 +9,9 @@ export class ApiService {
   private baseUrl = 'https://localhost:3000'
   constructor(private httpClient: HttpClient){}
 
+  getBaseUrl(): string {
+    return this.baseUrl;
+  }
   getData<T>(endpoint:string):Observable<T>{
     return this.httpClient.get<T>(`${this.baseUrl}/${endpoint}`)
   }

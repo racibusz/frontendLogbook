@@ -1,27 +1,27 @@
   <div>
     <ul>
       <li>
-        <a [routerLink]="'/'" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Strona Główna</a>
+        <a [routerLink]="'/'" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Main Page</a>
       </li>
       @if (!loggedIn()) {
         <li>
-          <a [routerLink]="'/login'" [routerLinkActive]="['active']">Logowanie</a>
+          <a [routerLink]="'/login'" [routerLinkActive]="['active']">Login</a>
         </li>
         <li>
-          <a [routerLink]="'/register'" [routerLinkActive]="['active']">Rejestracja</a>
+          <a [routerLink]="'/register'" [routerLinkActive]="['active']">Register</a>
         </li>
       }
       @if (loggedIn()) {
         <li>
-          <a [routerLink]="'/dashboard'" [routerLinkActive]="['active']" ><mat-icon>dashboard</mat-icon><div>Panel</div></a>
+          <a [routerLink]="'/dashboard'" [routerLinkActive]="['active']" ><mat-icon>dashboard</mat-icon><div>Dashboard</div></a>
         </li>
         <li>
-          <a [routerLink]="'/aircraft'" [routerLinkActive]="['active']" ><mat-icon>flightmode_active</mat-icon><div>Samoloty</div></a>
+          <a [routerLink]="'/aircraft'" [routerLinkActive]="['active']" ><mat-icon>flightmode_active</mat-icon><div>Aircraft</div></a>
         </li>
         <li>
-          <a [routerLink]="'/flights'" [routerLinkActive]="['active']" ><mat-icon>flight_takeoff</mat-icon><div>Loty</div></a>
+          <a [routerLink]="'/flights'" [routerLinkActive]="['active']" ><mat-icon>flight_takeoff</mat-icon><div>Flights</div></a>
           <ul>
-            <a [routerLink]="'/flights/add'" [routerLinkActive]="['active']"><mat-icon>add</mat-icon><div>Utwórz lot</div></a>
+            <a [routerLink]="'/flights/add'" [routerLinkActive]="['active']"><mat-icon>add</mat-icon><div>Create Flight</div></a>
           </ul>
         </li>
         <!-- <a [routerLink]="'/account'" [routerLinkActive]="['active']" ><li><mat-icon>person</mat-icon><div>Konto</div></li></a> -->

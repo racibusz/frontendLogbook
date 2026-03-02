@@ -3,7 +3,9 @@
         <app-single-item [item]="item" [selectedItem]="selectedItem" [sections]="sections"></app-single-item>
     }
     @empty{
-        Nie ma itemów
+        <div class="noItemInfo">
+            No items
+        </div>
         <!-- <app-shimmering-list></app-shimmering-list> -->
     }
 </div>

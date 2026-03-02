@@ -30,6 +30,7 @@ export class FlightsPageComponent {
 
     lineaerodrome1 = computed(()=>this.selectedFlight()?.departureAerodrome);
     lineaerodrome2 = computed(()=>this.selectedFlight()?.arrivalAerodrome);
+    flightRoute = computed(()=>this.selectedFlight()?.flightRoute);
 
     detailsSections: DetailsDTO = {
         sections: [
@@ -262,6 +263,7 @@ export class FlightsPageComponent {
     getFlights(){
       this.apiService.getData<FlightsResponseDTO>('flights').subscribe({
           next: (data) => {
+            console.log(data);
             this.flights.set(data.flights);
             const selectedFlight = this.selectedFlight()?.id;
             this.selectedFlight.set(this.flights()?.find(flight => flight.id === selectedFlight) || null);

@@ -1,153 +1,166 @@
-@if(item() != null && shimmer() == false){
-<div class="itemDetails">
+@if (item() != null) {
+  <div class="itemDetails">
     <mat-card>
-        <mat-card-content>
-            <div>
-                <mat-button-toggle [checked]="changes() !== null"  [disabled]="!canEdit()" (click)="switchEditing()" matIconButton  aria-label="">
-                    <mat-icon>edit</mat-icon>
-                    Tryb edycji
-                </mat-button-toggle>
-                <mat-button-toggle [disabled]="changes()==null" [checked]="false" (click)="saveChanges(item(), changes()); resetDOM()" matIconButton  aria-label="">
-                    <mat-icon>save</mat-icon>
-                    Zapisz
-                </mat-button-toggle>
-                <mat-button-toggle [disabled]="changes()!==null" [checked]="false" [disabled]="!canEdit()" (click)="askForDeleting(item())" matIconButton  aria-label="">
-                    <mat-icon>delete</mat-icon>
-                    Usuń
-                </mat-button-toggle>
-            </div>
-        </mat-card-content>
+      <mat-card-content>
+        <div>
+          <mat-button-toggle
+            [checked]="changes() !== null"
+            [disabled]="!canEdit()"
+            (click)="switchEditing()"
+            matIconButton
+            aria-label="Edit button"
+          >
+            <mat-icon>edit</mat-icon>
+            Edit mode
+          </mat-button-toggle>
+          <mat-button-toggle
+            [disabled]="changes() == null"
+            [checked]="false"
+            (click)="saveChanges(item(), changes())"
+            matIconButton
+            aria-label="Save button"
+          >
+            <mat-icon>save</mat-icon>
+            Save
+          </mat-button-toggle>
+          <mat-button-toggle
+            [disabled]="changes() !== null"
+            [checked]="false"
+            [disabled]="!canEdit()"
+            (click)="askForDeleting(item())"
+            matIconButton
+            aria-label="Delete button"
+          >
+            <mat-icon>delete</mat-icon>
+            Delete
+          </mat-button-toggle>
+        </div>
+      </mat-card-content>
     </mat-card>
 
     <div class="detailsContainer">
-<!-- 
-
-    @for(section of sections.sections; track section.title){
-
-        <section>
+      @if (isMobile()) {
+        @for (section of sections.sections; track section.title) {
+          <section>
             <header>
-                <hr>
-                <div>
-                    <mat-icon>{{section.iconName}}</mat-icon>
-                    {{section.title}}
-                </div>
+              <div>
+                <mat-icon>{{ section.iconName }}</mat-icon>
+                {{ section.title }}
+              </div>
             </header>
             <div class="content">
-                @for(row of section.table; track row.th){
-                    <div class="property">
-                        <mat-icon>{{row.iconName}}</mat-icon>
-                        {{row.th}}
-                    </div>
-                    <div class="value">
-                        <mat-form-field appearance="outline">
-                            <input matInput [value]="getFieldValue(row.td, item())" [disabled]="changes()==null" [pattern]="row.format">
-                        </mat-form-field>
-                    </div>
-                }
-            </div>
-        </section>
-
-    } -->
-    @if(isMobile()){
-        @for(section of sections.sections; track section.title){
-
-            <section>
-                <header>
-                    <div>
-                        <mat-icon>{{section.iconName}}</mat-icon>
-                        {{section.title}}
-                    </div>
-                </header>
-                <div class="content">
-                    @for(row of section.table; track row.th){
-                        <div class="property">
-                            <mat-icon>{{row.iconName}}</mat-icon>
-                            {{row.th}}
-                        </div>
-                        <div class="value">
-                            <mat-form-field appearance="outline">
-                                <input [type]='row.inputType ?? ""' matInput [name]="row.th" [ngModel]="getFieldValueComputed(row.td)()" (ngModelChange)="setValue(row.td, $event, row.format)" [disabled]="changes()==null">
-                            </mat-form-field>
-                            <!-- {{getFieldValue(row.td, item()) }} -->
-                        </div>
-                    }
+              @for (row of section.table; track row.th) {
+                <div class="property">
+                  <mat-icon>{{ row.iconName }}</mat-icon>
+                  {{ row.th }}
                 </div>
-            </section>
+                <div class="value">
+                  <mat-form-field appearance="outline">
+                    <input
+                      [type]="row.inputType ?? ''"
+                      matInput
+                      [name]="row.th"
+                      [ngModel]="getFieldValueComputed(row.td)()"
+                      (ngModelChange)="setValue(row.td, $event, row.format)"
+                      [disabled]="changes() == null"
+                    />
+                  </mat-form-field>
+                  <!-- {{getFieldValue(row.td, item()) }} -->
+                </div>
+              }
+            </div>
+          </section>
         }
-    }
-    @else{
+      } @else {
         <div class="grid">
-            <div class="column">
-                @for(section of sections.sections; track section.title; let i = $index){
-                    @if(i % 2 === 0){
-                    <section>
-                        <header>
-                            <div>
-                                <mat-icon>{{section.iconName}}</mat-icon>
-                                {{section.title}}
-                            </div>
-                        </header>
-                        <div class="content">
-                            @for(row of section.table; track row.th){
-                                <div class="property">
-                                    <mat-icon>{{row.iconName}}</mat-icon>
-                                    {{row.th}}
-                                </div>
-                                <div class="value">
-                                    <mat-form-field appearance="outline">
-                                        <input [type]='row.inputType ?? ""' matInput [name]="row.th" [ngModel]="getFieldValueComputed(row.td)()" (ngModelChange)="setValue(row.td, $event, row.format)" [disabled]="changes()==null">
-                                    </mat-form-field>
-                                    <!-- {{getFieldValue(row.td, item()) }} -->
-                                </div>
-                            }
-                        </div>
-                    </section>
+          <div class="column">
+            @for (
+              section of sections.sections;
+              track section.title;
+              let i = $index
+            ) {
+              @if (i % 2 === 0) {
+                <section>
+                  <header>
+                    <div>
+                      <mat-icon>{{ section.iconName }}</mat-icon>
+                      {{ section.title }}
+                    </div>
+                  </header>
+                  <div class="content">
+                    @for (row of section.table; track row.th) {
+                      <div class="property">
+                        <mat-icon>{{ row.iconName }}</mat-icon>
+                        {{ row.th }}
+                      </div>
+                      <div class="value">
+                        <mat-form-field appearance="outline">
+                          <input
+                            [type]="row.inputType ?? ''"
+                            matInput
+                            [name]="row.th"
+                            [ngModel]="getFieldValueComputed(row.td)()"
+                            (ngModelChange)="
+                              setValue(row.td, $event, row.format)
+                            "
+                            [disabled]="changes() == null"
+                          />
+                        </mat-form-field>
+                        <!-- {{getFieldValue(row.td, item()) }} -->
+                      </div>
                     }
-                }
-            </div>
-            <div class="column">
-                @for(section of sections.sections; track section.title; let i = $index){
-                    @if(i % 2 === 1) {
-                    <section>
-                        <header>
-                            <div>
-                                <mat-icon>{{section.iconName}}</mat-icon>
-                                {{section.title}}
-                            </div>
-                        </header>
-                        <div class="content">
-                            @for(row of section.table; track row.th){
-                                <div class="property">
-                                    <mat-icon>{{row.iconName}}</mat-icon>
-                                    {{row.th}}
-                                </div>
-                                <div class="value">
-                                    <mat-form-field appearance="outline">
-                                        <input [type]='row.inputType ?? ""' matInput [name]="row.th" [ngModel]="getFieldValueComputed(row.td)()" (ngModelChange)="setValue(row.td, $event, row.format)" [disabled]="changes()==null">
-                                    </mat-form-field>
-                                    <!-- {{getFieldValue(row.td, item()) }} -->
-                                </div>
-                            }
-                        </div>
-                    </section>
-                }
-                }
-            </div>
+                  </div>
+                </section>
+              }
+            }
+          </div>
+          <div class="column">
+            @for (
+              section of sections.sections;
+              track section.title;
+              let i = $index
+            ) {
+              @if (i % 2 === 1) {
+                <section>
+                  <header>
+                    <div>
+                      <mat-icon>{{ section.iconName }}</mat-icon>
+                      {{ section.title }}
+                    </div>
+                  </header>
+                  <div class="content">
+                    @for (row of section.table; track row.th) {
+                      <div class="property">
+                        <mat-icon>{{ row.iconName }}</mat-icon>
+                        {{ row.th }}
+                      </div>
+                      <div class="value">
+                        <mat-form-field appearance="outline">
+                          <input
+                            [type]="row.inputType ?? ''"
+                            matInput
+                            [name]="row.th"
+                            [ngModel]="getFieldValueComputed(row.td)()"
+                            (ngModelChange)="
+                              setValue(row.td, $event, row.format)
+                            "
+                            [disabled]="changes() == null"
+                          />
+                        </mat-form-field>
+                      </div>
+                    }
+                  </div>
+                </section>
+              }
+            }
+          </div>
         </div>
-    }
-
+      }
     </div>
-
-
-
-    
-
-</div>
+  </div>
 }
-@if(item()==null && shimmer()==false){
-    <div class="itemDetails">
-        <div class="noItemSelectedInfo">
-            Nie wybrano żadnego elementu
-        </div>
-    </div>
+@if (item() == null) {
+  <div class="itemDetails">
+    <div class="noItemSelectedInfo">No item selected</div>
+  </div>
 }

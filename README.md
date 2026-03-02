@@ -13,3 +13,15 @@ Main features consist of:
 - Allowing user to keep an eye on their licences status (Expirations, Extensions)
 
 This application is currently under development.
+
+Already done:
+
+- User managment
+- Flights
+    - Create, Read, Update, Delete
+    - Showing them on a map
+    - Linking the aircraft automatically
+- Aircraft
+    - Types database
+    - Automatically link aircraft to its record by reg.
+ 

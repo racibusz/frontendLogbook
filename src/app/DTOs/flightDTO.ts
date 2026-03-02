@@ -1,5 +1,6 @@
 import { AirplaneDTO } from "./airplaneDTO";
 import {AirportDTO} from './airportDTO';
+import { FlightRouteDTO } from "./flightRouteDTO";
 
 export interface FlightDTO {
     id: number;
@@ -24,4 +25,5 @@ export interface FlightDTO {
     dualTime: string;
     instructorTime: string;
     remarks: string;
+    flightRoute: FlightRouteDTO;
 }

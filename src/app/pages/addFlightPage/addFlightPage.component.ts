@@ -139,6 +139,8 @@ export class AddFlightPageComponent implements OnInit {
     this.bindCheckboxToTotalTime('SinglePilotSeTimeCheckbox', 'SinglePilotSeTime');
     this.bindCheckboxToTotalTime('SinglePilotMeTimeCheckbox', 'SinglePilotMeTime');
     this.bindCheckboxToTotalTime('multiPilotTimeCheckbox', 'multiPilotTime');
+    this.bindCheckboxToTotalTime('dualTimeCheckbox', 'dualTime');
+    this.bindCheckboxToTotalTime('instructorTimeCheckbox', 'instructorTime');
     this.bindCheckboxToTotalTime('picTimeCheckbox', 'picTime');
   }
 
